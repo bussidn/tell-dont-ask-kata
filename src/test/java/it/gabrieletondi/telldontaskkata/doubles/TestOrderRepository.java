@@ -4,11 +4,13 @@ import it.gabrieletondi.telldontaskkata.domain.order.Order;
 import it.gabrieletondi.telldontaskkata.repository.OrderRepository;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class TestOrderRepository implements OrderRepository {
     private Order insertedOrder;
-    private List<Order> orders = new ArrayList<>();
+    private Set<Order> orders = new HashSet<>();
 
     public Order getSavedOrder() {
         return insertedOrder;
@@ -16,12 +18,14 @@ public class TestOrderRepository implements OrderRepository {
 
     public void save(Order order) {
         this.insertedOrder = order;
+        orders.remove(order);
+        orders.add(order);
     }
 
     @Override
     public Order getById(int orderId) {
-        // TODO get rid of get()
-        return orders.stream().filter(o -> o.getId() == orderId).findFirst().get();
+        return orders.stream().filter(o -> o.getId() == orderId).findFirst()
+                .orElseThrow(RuntimeException::new);
     }
 
     public void addOrder(Order order) {
