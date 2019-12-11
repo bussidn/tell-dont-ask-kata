@@ -1,7 +1,9 @@
 package it.gabrieletondi.telldontaskkata.useCase;
 
-import it.gabrieletondi.telldontaskkata.domain.Order;
+import it.gabrieletondi.telldontaskkata.domain.order.Order;
 import it.gabrieletondi.telldontaskkata.domain.OrderStatus;
+import it.gabrieletondi.telldontaskkata.domain.order.OrderCannotBeShippedException;
+import it.gabrieletondi.telldontaskkata.domain.order.OrderCannotBeShippedTwiceException;
 import it.gabrieletondi.telldontaskkata.doubles.TestOrderRepository;
 import it.gabrieletondi.telldontaskkata.doubles.TestShipmentService;
 import it.gabrieletondi.telldontaskkata.useCase.shipment.OrderShipmentRequest;

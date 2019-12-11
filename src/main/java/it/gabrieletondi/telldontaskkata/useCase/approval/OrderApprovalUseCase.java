@@ -1,11 +1,11 @@
 package it.gabrieletondi.telldontaskkata.useCase.approval;
 
-import it.gabrieletondi.telldontaskkata.domain.Order;
+import it.gabrieletondi.telldontaskkata.domain.order.Order;
 import it.gabrieletondi.telldontaskkata.domain.OrderStatus;
 import it.gabrieletondi.telldontaskkata.repository.OrderRepository;
-import it.gabrieletondi.telldontaskkata.useCase.ApprovedOrderCannotBeRejectedException;
-import it.gabrieletondi.telldontaskkata.useCase.RejectedOrderCannotBeApprovedException;
-import it.gabrieletondi.telldontaskkata.useCase.ShippedOrdersCannotBeChangedException;
+import it.gabrieletondi.telldontaskkata.domain.order.ApprovedOrderCannotBeRejectedException;
+import it.gabrieletondi.telldontaskkata.domain.order.RejectedOrderCannotBeApprovedException;
+import it.gabrieletondi.telldontaskkata.domain.order.ShippedOrdersCannotBeChangedException;
 
 public class OrderApprovalUseCase {
     private final OrderRepository orderRepository;
