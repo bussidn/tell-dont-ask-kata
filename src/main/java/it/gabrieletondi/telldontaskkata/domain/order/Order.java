@@ -61,4 +61,38 @@ public class Order {
     public void setId(int id) {
         this.id = id;
     }
+
+    public boolean isShipped() {
+        return status.equals(OrderStatus.SHIPPED);
+    }
+
+    private void throwIfShipped() {
+        if (isShipped()) {
+            throw new ShippedOrdersCannotBeChangedException();
+        }
+    }
+
+    private boolean isRejected() {
+        return status.equals(OrderStatus.REJECTED);
+    }
+
+    private boolean isApproved() {
+        return status.equals(OrderStatus.APPROVED);
+    }
+
+    public void approve() {
+        throwIfShipped();
+        if (isRejected()) {
+            throw new RejectedOrderCannotBeApprovedException();
+        }
+        setStatus(OrderStatus.APPROVED);
+    }
+
+    public void reject() {
+        throwIfShipped();
+        if (isApproved()) {
+            throw new ApprovedOrderCannotBeRejectedException();
+        }
+        setStatus(OrderStatus.REJECTED);
+    }
 }

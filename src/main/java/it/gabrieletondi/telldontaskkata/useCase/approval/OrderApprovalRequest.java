@@ -1,22 +1,37 @@
 package it.gabrieletondi.telldontaskkata.useCase.approval;
 
+import it.gabrieletondi.telldontaskkata.domain.order.Order;
+import it.gabrieletondi.telldontaskkata.repository.OrderRepository;
+
 public class OrderApprovalRequest {
-    private int orderId;
-    private boolean approved;
+    public int orderId;
+    public boolean approved;
 
-    public void setOrderId(int orderId) {
-        this.orderId = orderId;
+    public FunctionalOrderApprovalRequest toFunctionalRequest(OrderRepository orderRepository) {
+        return new FunctionalOrderApprovalRequest(orderId, approved, orderRepository);
     }
 
-    public int getOrderId() {
-        return orderId;
-    }
+    public static class FunctionalOrderApprovalRequest {
+        public final int orderId;
+        public final boolean approved;
+        private final OrderRepository orderRepository;
 
-    public void setApproved(boolean approved) {
-        this.approved = approved;
-    }
+        public FunctionalOrderApprovalRequest(int orderId, boolean approved, OrderRepository orderRepository) {
+            this.orderId = orderId;
+            this.approved = approved;
+            this.orderRepository = orderRepository;
+        }
 
-    public boolean isApproved() {
-        return approved;
+        public void run() {
+            final Order order = orderRepository.getById(orderId);
+            approveOrReject(order);
+            orderRepository.save(order);
+        }
+
+        private void approveOrReject(Order order) {
+            if (approved) order.approve();
+            else order.reject();
+        }
+
     }
 }
