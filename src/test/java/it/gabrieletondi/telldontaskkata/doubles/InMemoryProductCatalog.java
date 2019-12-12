@@ -15,4 +15,5 @@ public class InMemoryProductCatalog implements ProductCatalog {
     public Product getByName(final String name) {
         return products.stream().filter(p -> p.getName().equals(name)).findFirst().orElse(null);
     }
+
 }
