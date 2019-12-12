@@ -5,7 +5,6 @@ import lombok.Builder;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 
 import static java.math.BigDecimal.valueOf;
 import static java.math.RoundingMode.HALF_UP;
@@ -28,10 +27,7 @@ public class Product {
     }
 
     BigDecimal unitaryTax() {
-        return divideByHundred(this.price).multiply(category.getTaxPercentage()).setScale(2, HALF_UP);
+        return category.taxRate().multiply(this.price).setScale(2, HALF_UP);
     }
 
-    private BigDecimal divideByHundred(BigDecimal price) {
-        return price.divide(valueOf(100), price.scale() + 2, RoundingMode.UNNECESSARY);
-    }
 }
