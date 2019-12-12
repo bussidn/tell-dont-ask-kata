@@ -30,4 +30,7 @@ public class Product {
         return category.taxRate().multiply(this.price).setScale(2, HALF_UP);
     }
 
+    BigDecimal getUnitaryTaxedAmount() {
+        return price.add(unitaryTax()).setScale(2, HALF_UP);
+    }
 }
