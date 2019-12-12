@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.util.Optional;
 
 @Builder
 @AllArgsConstructor
@@ -14,8 +15,8 @@ public class Product {
     private BigDecimal price;
     private Category category;
 
-    public String getName() {
-        return name;
+    public Optional<String> getName(){
+        return Optional.ofNullable(name);
     }
 
     public BigDecimal getPrice() {

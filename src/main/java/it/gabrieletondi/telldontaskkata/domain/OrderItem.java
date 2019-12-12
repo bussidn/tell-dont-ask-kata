@@ -21,13 +21,15 @@ public class OrderItem {
     }
 
     public BigDecimal getTaxedAmount() {
-        final BigDecimal unitaryTax = product.getPrice().divide(valueOf(100)).multiply(product.getCategory().getTaxPercentage()).setScale(2, HALF_UP);
-        final BigDecimal unitaryTaxedAmount = product.getPrice().add(unitaryTax).setScale(2, HALF_UP);
+        final BigDecimal unitaryTaxedAmount = product.getPrice().add(unitaryTax()).setScale(2, HALF_UP);
         return unitaryTaxedAmount.multiply(BigDecimal.valueOf(quantity)).setScale(2, HALF_UP);
     }
 
+    private BigDecimal unitaryTax() {
+        return product.getPrice().divide(valueOf(100)).multiply(product.getCategory().getTaxPercentage()).setScale(2, HALF_UP);
+    }
+
     public BigDecimal getTax() {
-        final BigDecimal unitaryTax = product.getPrice().divide(valueOf(100)).multiply(product.getCategory().getTaxPercentage()).setScale(2, HALF_UP);
-        return unitaryTax.multiply(BigDecimal.valueOf(quantity));
+        return unitaryTax().multiply(BigDecimal.valueOf(quantity));
     }
 }
