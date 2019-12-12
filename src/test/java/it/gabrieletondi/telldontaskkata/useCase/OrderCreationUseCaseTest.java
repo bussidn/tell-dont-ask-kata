@@ -13,6 +13,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
@@ -25,19 +26,24 @@ public class OrderCreationUseCaseTest {
             .taxPercentage(new BigDecimal("10")).build();
 
     private final ProductCatalog productCatalog = new InMemoryProductCatalog(
-            Arrays.asList(
-                    new Product() {{
-                        setName("salad");
-                        setPrice(new BigDecimal("3.56"));
-                        setCategory(food);
-                    }},
-                    new Product() {{
-                        setName("tomato");
-                        setPrice(new BigDecimal("4.65"));
-                        setCategory(food);
-                    }}
-            )
+            products()
     );
+
+    private List<Product> products() {
+        return Arrays.asList(
+                product("salad", "3.56"),
+                product("tomato", "4.65")
+        );
+    }
+
+    private Product product(String name, String price) {
+        return Product.builder()
+                .name(name)
+                .price(new BigDecimal(price))
+                .category(food)
+                .build();
+    }
+
     private final OrderCreationUseCase useCase = new OrderCreationUseCase(orderRepository, productCatalog);
 
     @Test
