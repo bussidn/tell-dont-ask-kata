@@ -1,6 +1,8 @@
 package it.gabrieletondi.telldontaskkata.domain;
 
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -8,7 +10,10 @@ import java.math.RoundingMode;
 import static java.math.BigDecimal.valueOf;
 
 @Builder
+@EqualsAndHashCode
+@ToString
 public class Category {
+
     private String name;
     private BigDecimal taxPercentage;
 

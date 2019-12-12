@@ -1,12 +1,16 @@
 package it.gabrieletondi.telldontaskkata.domain;
 
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 import java.math.BigDecimal;
 
 import static java.math.RoundingMode.HALF_UP;
 
 @Builder
+@EqualsAndHashCode
+@ToString
 public class OrderItem {
 
     private Product product;
@@ -21,7 +25,7 @@ public class OrderItem {
     }
 
     public BigDecimal getTaxedAmount() {
-        return multiplyByQuantity(product.getUnitaryTaxedAmount());
+        return multiplyByQuantity(product.unitaryTaxedAmount());
     }
 
     public BigDecimal getTax() {

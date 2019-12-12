@@ -2,9 +2,7 @@ package it.gabrieletondi.telldontaskkata.domain;
 
 import it.gabrieletondi.telldontaskkata.service.ShipmentService;
 import it.gabrieletondi.telldontaskkata.useCase.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -15,6 +13,8 @@ import static it.gabrieletondi.telldontaskkata.domain.OrderStatus.*;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
+@EqualsAndHashCode
+@ToString
 public class Order {
     private String currency = "EUR";
     private List<OrderItem> items = new ArrayList<>();
