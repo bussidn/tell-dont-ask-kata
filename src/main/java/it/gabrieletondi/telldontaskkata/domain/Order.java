@@ -103,11 +103,4 @@ public class Order {
         newOrderItems.addAll(orderItems);
         return this.withItems(newOrderItems);
     }
-
-    public static class OrderBuilder {
-
-        public OrderBuilder combine(OrderBuilder other) {
-            return this.items(other.items);
-        }
-    }
 }
