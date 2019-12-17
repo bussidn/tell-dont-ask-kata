@@ -16,7 +16,10 @@ import static it.gabrieletondi.telldontaskkata.domain.OrderStatus.*;
 @EqualsAndHashCode
 @ToString
 public class Order {
-    private String currency = "EUR";
+
+    private static final String EURO = "EUR";
+
+    private String currency = EURO;
     private List<OrderItem> items = new ArrayList<>();
     private OrderStatus status = OrderStatus.CREATED;
     private int id;
@@ -25,10 +28,6 @@ public class Order {
         return items.stream()
                 .map(OrderItem::getTaxedAmount)
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
-    }
-
-    public String getCurrency() {
-        return currency;
     }
 
     public List<OrderItem> getItems() {

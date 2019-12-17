@@ -22,14 +22,6 @@ public class Product {
         return p -> p.name.equals(name);
     }
 
-    public String getName(){
-        return name;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
-    }
-
     BigDecimal unitaryTax() {
         return category.taxRate().multiply(this.price).setScale(2, HALF_UP);
     }
