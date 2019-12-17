@@ -6,6 +6,7 @@ import lombok.*;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 import static it.gabrieletondi.telldontaskkata.domain.OrderStatus.*;
@@ -22,7 +23,7 @@ public class Order {
 
     private String currency = EURO;
     private List<OrderItem> items = new ArrayList<>();
-    private  OrderStatus status = OrderStatus.CREATED;
+    private OrderStatus status = OrderStatus.CREATED;
     private int id;
 
     public BigDecimal getTotal() {
@@ -73,8 +74,10 @@ public class Order {
         return id;
     }
 
-    public void addItem(OrderItem orderItem) {
-        items.add(orderItem);
+    public Order addItem(OrderItem orderItem) {
+        List<OrderItem> newItemList = new LinkedList<>(items);
+        newItemList.add(orderItem);
+        return this.withItems(newItemList);
     }
 
     public Order ship(ShipmentService shipmentService) {

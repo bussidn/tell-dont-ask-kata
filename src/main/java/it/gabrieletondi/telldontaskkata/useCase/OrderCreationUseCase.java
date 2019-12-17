@@ -6,16 +6,16 @@ import it.gabrieletondi.telldontaskkata.domain.Product;
 import it.gabrieletondi.telldontaskkata.repository.OrderRepository;
 import it.gabrieletondi.telldontaskkata.repository.ProductCatalog;
 
-public class OrderCreationUseCase {
+class OrderCreationUseCase {
     private final OrderRepository orderRepository;
     private final ProductCatalog productCatalog;
 
-    public OrderCreationUseCase(OrderRepository orderRepository, ProductCatalog productCatalog) {
+    OrderCreationUseCase(OrderRepository orderRepository, ProductCatalog productCatalog) {
         this.orderRepository = orderRepository;
         this.productCatalog = productCatalog;
     }
 
-    public void run(SellItemsRequest request) {
+    void run(SellItemsRequest request) {
         Order order = new Order();
 
         for (SellItemRequest itemRequest : request.getRequests()) {
@@ -27,7 +27,7 @@ public class OrderCreationUseCase {
             else {
                 final OrderItem orderItem = createOrderItem(itemRequest, product);
 
-                order.addItem(orderItem);
+                order = order.addItem(orderItem);
             }
         }
 
