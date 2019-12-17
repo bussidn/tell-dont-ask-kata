@@ -1,6 +1,7 @@
 package it.gabrieletondi.telldontaskkata.domain;
 
 import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 import java.math.BigDecimal;
 import java.util.function.Predicate;
@@ -8,15 +9,14 @@ import java.util.function.Predicate;
 import static java.math.RoundingMode.HALF_UP;
 
 @Builder
-@AllArgsConstructor
-@NoArgsConstructor
-@EqualsAndHashCode
 @ToString
+@EqualsAndHashCode
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class Product {
 
-    private String name;
-    private BigDecimal price;
-    private Category category;
+    @NonNull String name;
+    @NonNull BigDecimal price;
+    @NonNull Category category;
 
     public static Predicate<Product> byName(String name) {
         return p -> p.name.equals(name);
