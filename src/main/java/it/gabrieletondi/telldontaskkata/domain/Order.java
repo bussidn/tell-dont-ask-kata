@@ -3,6 +3,7 @@ package it.gabrieletondi.telldontaskkata.domain;
 import it.gabrieletondi.telldontaskkata.service.ShipmentService;
 import it.gabrieletondi.telldontaskkata.useCase.*;
 import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -11,21 +12,26 @@ import java.util.List;
 
 import static it.gabrieletondi.telldontaskkata.domain.OrderStatus.*;
 
-@Builder(toBuilder = true)
-@AllArgsConstructor
-@EqualsAndHashCode
-@ToString
 @With
+@ToString
+@EqualsAndHashCode
+@AllArgsConstructor
+@Builder(toBuilder = true)
+@FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 public class Order {
 
     private static final String EURO = "EUR";
+
     @Builder.Default
-    private String currency = EURO;
+    @NonNull String currency = EURO;
+
     @Singular
-    private List<OrderItem> items;
+    @NonNull List<OrderItem> items;
+
     @Builder.Default
-    private OrderStatus status = OrderStatus.CREATED;
-    private int id;
+    @NonNull OrderStatus status = OrderStatus.CREATED;
+
+    int id;
 
     public BigDecimal getTotal() {
         return items.stream()
