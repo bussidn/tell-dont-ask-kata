@@ -44,7 +44,7 @@ public class Order {
         return status;
     }
 
-    public void reject() {
+    public Order reject() {
         if (status.equals(OrderStatus.SHIPPED)) {
             throw new ShippedOrdersCannotBeChangedException();
         }
@@ -53,9 +53,10 @@ public class Order {
             throw new ApprovedOrderCannotBeRejectedException();
         }
         status = OrderStatus.REJECTED;
+        return this;
     }
 
-    public void approve() {
+    public Order approve() {
         if (status.equals(OrderStatus.SHIPPED)) {
             throw new ShippedOrdersCannotBeChangedException();
         }
@@ -64,6 +65,7 @@ public class Order {
             throw new RejectedOrderCannotBeApprovedException();
         }
         status = OrderStatus.APPROVED;
+        return this;
     }
 
     public int getId() {
@@ -74,7 +76,7 @@ public class Order {
         items.add(orderItem);
     }
 
-    public void ship(ShipmentService shipmentService) {
+    public Order ship(ShipmentService shipmentService) {
         if (status.equals(CREATED) || status.equals(REJECTED)) {
             throw new OrderCannotBeShippedException();
         }
@@ -86,5 +88,6 @@ public class Order {
         shipmentService.ship(this);
 
         status = OrderStatus.SHIPPED;
+        return this;
     }
 }

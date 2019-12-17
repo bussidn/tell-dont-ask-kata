@@ -10,14 +10,11 @@ class OrderApprovalUseCase {
         this.orderRepository = orderRepository;
     }
 
-    void run(OrderApprovalRequest request) {
+    final void run(OrderApprovalRequest request) {
         final Order order = orderRepository.getById(request.getOrderId());
-        if(request.isApproved()) {
-            order.approve();
-        }
-        else {
-            order.reject();
-        }
-        orderRepository.save(order);
+        final Order updatedOrder = request.isApproved() ?
+                order.approve() :
+                order.reject();
+        orderRepository.save(updatedOrder);
     }
 }
