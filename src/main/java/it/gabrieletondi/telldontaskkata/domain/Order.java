@@ -45,19 +45,26 @@ public class Order {
         return status;
     }
 
-    public void approveOrReject(boolean isApproved) {
+    public void reject() {
         if (status.equals(OrderStatus.SHIPPED)) {
             throw new ShippedOrdersCannotBeChangedException();
         }
 
-        if (isApproved && status.equals(OrderStatus.REJECTED)) {
-            throw new RejectedOrderCannotBeApprovedException();
-        }
-
-        if (!isApproved && status.equals(OrderStatus.APPROVED)) {
+        if (status.equals(OrderStatus.APPROVED)) {
             throw new ApprovedOrderCannotBeRejectedException();
         }
-        status = isApproved ? OrderStatus.APPROVED : OrderStatus.REJECTED;
+        status = OrderStatus.REJECTED;
+    }
+
+    public void approve() {
+        if (status.equals(OrderStatus.SHIPPED)) {
+            throw new ShippedOrdersCannotBeChangedException();
+        }
+
+        if (status.equals(OrderStatus.REJECTED)) {
+            throw new RejectedOrderCannotBeApprovedException();
+        }
+        status = OrderStatus.APPROVED;
     }
 
     public int getId() {
