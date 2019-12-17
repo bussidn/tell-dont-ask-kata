@@ -9,7 +9,7 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
 
-public class OrderApprovalUseCaseTest {
+public class OrderApprovalOrRejectionUseCaseTest {
     private final TestOrderRepository orderRepository = new TestOrderRepository();
     private final OrderApprovalUseCase useCase = new OrderApprovalUseCase(orderRepository);
 
@@ -19,7 +19,7 @@ public class OrderApprovalUseCaseTest {
         Order initialOrder = createOrder(id, OrderStatus.CREATED);
         orderRepository.addOrder(initialOrder);
 
-        OrderApprovalRequest request = new OrderApprovalRequest();
+        OrderApprovalOrRejectionRequest request = new OrderApprovalOrRejectionRequest();
         request.setOrderId(id);
         request.setApproved(true);
 
@@ -41,7 +41,7 @@ public class OrderApprovalUseCaseTest {
         Order initialOrder = createOrder(1, OrderStatus.CREATED);
         orderRepository.addOrder(initialOrder);
 
-        OrderApprovalRequest request = new OrderApprovalRequest();
+        OrderApprovalOrRejectionRequest request = new OrderApprovalOrRejectionRequest();
         request.setOrderId(1);
         request.setApproved(false);
 
@@ -56,7 +56,7 @@ public class OrderApprovalUseCaseTest {
         Order initialOrder = createOrder(1, OrderStatus.REJECTED);
         orderRepository.addOrder(initialOrder);
 
-        OrderApprovalRequest request = new OrderApprovalRequest();
+        OrderApprovalOrRejectionRequest request = new OrderApprovalOrRejectionRequest();
         request.setOrderId(1);
         request.setApproved(true);
 
@@ -70,7 +70,7 @@ public class OrderApprovalUseCaseTest {
         Order initialOrder = createOrder(1, OrderStatus.APPROVED);
         orderRepository.addOrder(initialOrder);
 
-        OrderApprovalRequest request = new OrderApprovalRequest();
+        OrderApprovalOrRejectionRequest request = new OrderApprovalOrRejectionRequest();
         request.setOrderId(1);
         request.setApproved(false);
 
@@ -84,7 +84,7 @@ public class OrderApprovalUseCaseTest {
         Order initialOrder = createOrder(1, OrderStatus.SHIPPED);
         orderRepository.addOrder(initialOrder);
 
-        OrderApprovalRequest request = new OrderApprovalRequest();
+        OrderApprovalOrRejectionRequest request = new OrderApprovalOrRejectionRequest();
         request.setOrderId(1);
         request.setApproved(true);
 
@@ -98,7 +98,7 @@ public class OrderApprovalUseCaseTest {
         Order initialOrder = createOrder(1, OrderStatus.SHIPPED);
         orderRepository.addOrder(initialOrder);
 
-        OrderApprovalRequest request = new OrderApprovalRequest();
+        OrderApprovalOrRejectionRequest request = new OrderApprovalOrRejectionRequest();
         request.setOrderId(1);
         request.setApproved(false);
 
