@@ -13,16 +13,17 @@ import static it.gabrieletondi.telldontaskkata.domain.OrderStatus.*;
 
 @Builder(toBuilder = true)
 @AllArgsConstructor
-@NoArgsConstructor
 @EqualsAndHashCode
 @ToString
 @With
 public class Order {
 
     private static final String EURO = "EUR";
-
+    @Builder.Default
     private String currency = EURO;
-    private List<OrderItem> items = new ArrayList<>();
+    @Singular
+    private List<OrderItem> items;
+    @Builder.Default
     private OrderStatus status = OrderStatus.CREATED;
     private int id;
 

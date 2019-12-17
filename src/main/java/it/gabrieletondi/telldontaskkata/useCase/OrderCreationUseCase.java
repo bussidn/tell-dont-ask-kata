@@ -16,7 +16,7 @@ class OrderCreationUseCase {
     }
 
     void run(SellItemsRequest request) {
-        Order order = new Order();
+        Order.OrderBuilder orderBuilder = Order.builder();
 
         for (SellItemRequest itemRequest : request.getRequests()) {
             Product product = productCatalog.getByName(itemRequest.getProductName());
@@ -27,11 +27,11 @@ class OrderCreationUseCase {
             else {
                 final OrderItem orderItem = createOrderItem(itemRequest, product);
 
-                order = order.addItem(orderItem);
+                orderBuilder = orderBuilder.item(orderItem);
             }
         }
 
-        orderRepository.save(order);
+        orderRepository.save(orderBuilder.build());
     }
 
     private OrderItem createOrderItem(SellItemRequest itemRequest, Product product) {
