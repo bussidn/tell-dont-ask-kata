@@ -10,18 +10,19 @@ import java.util.List;
 
 import static it.gabrieletondi.telldontaskkata.domain.OrderStatus.*;
 
-@Builder
+@Builder(toBuilder = true)
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
 @ToString
+@With
 public class Order {
 
     private static final String EURO = "EUR";
 
     private String currency = EURO;
     private List<OrderItem> items = new ArrayList<>();
-    private OrderStatus status = OrderStatus.CREATED;
+    private  OrderStatus status = OrderStatus.CREATED;
     private int id;
 
     public BigDecimal getTotal() {
@@ -52,8 +53,8 @@ public class Order {
         if (status.equals(OrderStatus.APPROVED)) {
             throw new ApprovedOrderCannotBeRejectedException();
         }
-        status = OrderStatus.REJECTED;
-        return this;
+
+        return this.withStatus(REJECTED);
     }
 
     public Order approve() {
@@ -64,8 +65,8 @@ public class Order {
         if (status.equals(OrderStatus.REJECTED)) {
             throw new RejectedOrderCannotBeApprovedException();
         }
-        status = OrderStatus.APPROVED;
-        return this;
+
+        return this.withStatus(APPROVED);
     }
 
     public int getId() {
@@ -87,7 +88,6 @@ public class Order {
 
         shipmentService.ship(this);
 
-        status = OrderStatus.SHIPPED;
-        return this;
+        return this.withStatus(SHIPPED);
     }
 }
