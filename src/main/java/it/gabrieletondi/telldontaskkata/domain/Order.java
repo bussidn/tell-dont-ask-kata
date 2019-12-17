@@ -81,12 +81,6 @@ public class Order {
         return id;
     }
 
-    public Order addItem(OrderItem orderItem) {
-        List<OrderItem> newItemList = new LinkedList<>(items);
-        newItemList.add(orderItem);
-        return this.withItems(newItemList);
-    }
-
     public Order ship(ShipmentService shipmentService) {
         if (status.equals(CREATED) || status.equals(REJECTED)) {
             throw new OrderCannotBeShippedException();
