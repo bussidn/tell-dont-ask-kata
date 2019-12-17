@@ -6,6 +6,8 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.math.BigDecimal;
+import java.util.Collection;
+import java.util.LinkedList;
 import java.util.List;
 
 import static it.gabrieletondi.telldontaskkata.domain.OrderStatus.*;
@@ -90,5 +92,22 @@ public class Order {
         shipmentService.ship(this);
 
         return this.withStatus(SHIPPED);
+    }
+
+    public Order combine(Order other) {
+        return this.addItems(other.items);
+    }
+
+    private Order addItems(Collection<? extends OrderItem> orderItems) {
+        LinkedList<OrderItem> newOrderItems = new LinkedList<>(items);
+        newOrderItems.addAll(orderItems);
+        return this.withItems(newOrderItems);
+    }
+
+    public static class OrderBuilder {
+
+        public OrderBuilder combine(OrderBuilder other) {
+            return this.items(other.items);
+        }
     }
 }

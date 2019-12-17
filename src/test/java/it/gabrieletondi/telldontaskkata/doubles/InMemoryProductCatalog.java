@@ -4,6 +4,7 @@ import it.gabrieletondi.telldontaskkata.domain.Product;
 import it.gabrieletondi.telldontaskkata.repository.ProductCatalog;
 
 import java.util.List;
+import java.util.Optional;
 
 import static it.gabrieletondi.telldontaskkata.domain.Product.byName;
 
@@ -14,11 +15,11 @@ public class InMemoryProductCatalog implements ProductCatalog {
         this.products = products;
     }
 
-    public Product getByName(final String name) {
+    @Override
+    public Optional<Product> getByName(final String name) {
         return products.stream()
                 .filter(byName(name))
-                .findFirst()
-                .orElse(null);
+                .findFirst();
     }
 
 }

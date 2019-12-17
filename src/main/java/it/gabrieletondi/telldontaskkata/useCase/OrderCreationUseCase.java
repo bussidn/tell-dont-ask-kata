@@ -6,7 +6,8 @@ import it.gabrieletondi.telldontaskkata.domain.Product;
 import it.gabrieletondi.telldontaskkata.repository.OrderRepository;
 import it.gabrieletondi.telldontaskkata.repository.ProductCatalog;
 
-import java.util.ArrayList;
+import java.util.function.Function;
+import java.util.stream.Stream;
 
 class OrderCreationUseCase {
     private final OrderRepository orderRepository;
@@ -18,28 +19,31 @@ class OrderCreationUseCase {
     }
 
     void run(SellItemsRequest request) {
-        Order.OrderBuilder orderBuilder = Order.builder();
-
-        for (SellItemRequest itemRequest : request.getRequests()) {
-            Product product = productCatalog.getByName(itemRequest.getProductName());
-
-            if (product == null) {
-                throw new UnknownProductException();
-            }
-            else {
-                final OrderItem orderItem = createOrderItem(itemRequest, product);
-
-                orderBuilder = orderBuilder.item(orderItem);
-            }
-        }
-
-        orderRepository.save(orderBuilder.build());
+        sellItemRequests(request)
+                .map(toOrderItem(productCatalog))
+                .map(toOrder())
+                .reduce(Order::combine)
+                .ifPresent(orderRepository::save);
     }
 
-    private OrderItem createOrderItem(SellItemRequest itemRequest, Product product) {
+    private Function<OrderItem, Order> toOrder() {
+        return orderItem -> Order.builder().item(orderItem).build();
+    }
+
+    private Stream<SellItemRequest> sellItemRequests(SellItemsRequest request) {
+        return request.getRequests()
+                .stream();
+    }
+
+    private static Function<SellItemRequest, OrderItem> toOrderItem(ProductCatalog productCatalog) {
+        return sellItemRequest -> {
+            Product product = productCatalog.getByName(sellItemRequest.getProductName())
+                .orElseThrow(UnknownProductException::new);
         return OrderItem.builder()
                 .product(product)
-                .quantity(itemRequest.getQuantity())
+                .quantity(sellItemRequest.getQuantity())
                 .build();
+        };
     }
+
 }
