@@ -6,6 +6,8 @@ import it.gabrieletondi.telldontaskkata.repository.ProductCatalog;
 import java.util.List;
 import java.util.Optional;
 
+import static it.gabrieletondi.telldontaskkata.domain.Product.byName;
+
 public class InMemoryProductCatalog implements ProductCatalog {
     private final List<Product> products;
 
@@ -15,6 +17,6 @@ public class InMemoryProductCatalog implements ProductCatalog {
 
     @Override
     public Optional<Product> findByName(String name) {
-        return products.stream().filter(p -> p.getName().equals(name)).findFirst();
+        return products.stream().filter(byName(name)).findFirst();
     }
 }

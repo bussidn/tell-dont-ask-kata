@@ -3,6 +3,7 @@ package it.gabrieletondi.telldontaskkata.domain;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Objects;
+import java.util.function.Predicate;
 
 import static java.math.BigDecimal.valueOf;
 import static java.math.RoundingMode.HALF_UP;
@@ -22,12 +23,8 @@ public class Product {
         return new Product.Builder(name);
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public BigDecimal getPrice() {
-        return price;
+    public static Predicate<Product> byName(String name) {
+        return p -> p.name.equals(name);
     }
 
     BigDecimal unitaryTax() {
