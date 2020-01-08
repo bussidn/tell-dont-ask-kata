@@ -2,7 +2,6 @@ package it.gabrieletondi.telldontaskkata.useCase;
 
 import it.gabrieletondi.telldontaskkata.domain.Category;
 import it.gabrieletondi.telldontaskkata.domain.OrderStatus;
-import it.gabrieletondi.telldontaskkata.domain.Product;
 import it.gabrieletondi.telldontaskkata.domain.order.Order;
 import it.gabrieletondi.telldontaskkata.doubles.InMemoryProductCatalog;
 import it.gabrieletondi.telldontaskkata.doubles.TestOrderRepository;
@@ -15,6 +14,7 @@ import org.junit.Test;
 import java.math.BigDecimal;
 import java.util.Arrays;
 
+import static it.gabrieletondi.telldontaskkata.domain.Product.createWithName;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
@@ -26,16 +26,14 @@ public class OrderCreationUseCaseTest {
     }};
     private final ProductCatalog productCatalog = new InMemoryProductCatalog(
             Arrays.asList(
-                    new Product() {{
-                        setName("salad");
-                        setPrice(new BigDecimal("3.56"));
-                        setCategory(food);
-                    }},
-                    new Product() {{
-                        setName("tomato");
-                        setPrice(new BigDecimal("4.65"));
-                        setCategory(food);
-                    }}
+                    createWithName("salad")
+                            .price("3.56")
+                            .category(food)
+                            .build(),
+                    createWithName("tomato")
+                            .price("4.65")
+                            .category(food)
+                            .build()
             )
     );
     private final OrderCreationUseCase useCase = new OrderCreationUseCase(orderRepository, productCatalog);

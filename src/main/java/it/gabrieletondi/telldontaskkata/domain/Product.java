@@ -21,24 +21,16 @@ public class Product {
         this.category = category;
     }
 
+    public static Product.Builder createWithName(String name) {
+        return new Product.Builder(name);
+    }
+
     public String getName() {
         return name;
     }
 
-    protected void setName(String name) {
-        this.name = name;
-    }
-
     public BigDecimal getPrice() {
         return price;
-    }
-
-    protected void setPrice(BigDecimal price) {
-        this.price = price;
-    }
-
-    protected void setCategory(Category category) {
-        this.category = category;
     }
 
     BigDecimal unitaryTax() {
@@ -57,12 +49,12 @@ public class Product {
         private BigDecimal price;
         private Category category;
 
-        public Builder(String name) {
+        Builder(String name) {
             this.name = name;
         }
 
-        public Builder price(BigDecimal price) {
-            this.price = price;
+        public Builder price(String price) {
+            this.price = new BigDecimal(price);
             return this;
         }
 
