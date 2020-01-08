@@ -22,11 +22,15 @@ public class OrderItem {
     }
 
     public BigDecimal taxedAmount() {
-        return product.unitaryTaxedAmount()
-                .multiply(BigDecimal.valueOf(quantity)).setScale(2, HALF_UP);
+        return multiplyByQuantity(product.unitaryTaxedAmount());
     }
 
     public BigDecimal tax() {
-        return product.unitaryTax().multiply(BigDecimal.valueOf(quantity));
+        return multiplyByQuantity(product.unitaryTax());
+    }
+
+    private BigDecimal multiplyByQuantity(BigDecimal bigDecimal) {
+        return bigDecimal
+                .multiply(BigDecimal.valueOf(quantity)).setScale(2, HALF_UP);
     }
 }
