@@ -49,8 +49,8 @@ public class OrderCreationUseCaseTest {
         SellItemRequest tomatoRequest = sellItemRequest("tomato", 3);
 
         final SellItemsRequest request = new SellItemsRequest(id);
-        request.getRequests().add(saladRequest);
-        request.getRequests().add(tomatoRequest);
+        request.add(saladRequest);
+        request.add(tomatoRequest);
 
         useCase.run(request);
 
@@ -84,7 +84,7 @@ public class OrderCreationUseCaseTest {
     public void unknownProduct() {
         SellItemsRequest request = new SellItemsRequest(1);
         SellItemRequest unknownProductRequest = sellItemRequest("unknown product", 7);
-        request.getRequests().add(unknownProductRequest);
+        request.add(unknownProductRequest);
 
         useCase.run(request);
     }

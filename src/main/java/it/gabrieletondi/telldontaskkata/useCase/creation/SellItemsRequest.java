@@ -20,12 +20,12 @@ public class SellItemsRequest {
         this.id = id;
     }
 
-    public List<SellItemRequest> getRequests() {
-        return requests;
-    }
-
     OrderCreationCommand toSellItemsCommand(OrderRepository orderRepository, ProductCatalog productCatalog) {
         return new OrderCreationCommand(id, requests, orderRepository, productCatalog);
+    }
+
+    public void add(SellItemRequest sellItemRequest) {
+        requests.add(sellItemRequest);
     }
 
     class OrderCreationCommand {
