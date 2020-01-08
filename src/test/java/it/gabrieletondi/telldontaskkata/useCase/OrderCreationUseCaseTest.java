@@ -61,21 +61,15 @@ public class OrderCreationUseCaseTest {
         assertThat(insertedOrder.getCurrency(), is("EUR"));
         assertThat(insertedOrder.getItems(), hasSize(2));
 
-        assertThat(insertedOrder.getItems().get(0).getProduct().getName(), is("salad"));
-        assertThat(insertedOrder.getItems().get(0).getProduct().getPrice(), is(new BigDecimal("3.56")));
-        assertThat(insertedOrder.getItems().get(0).getQuantity(), is(2));
-        assertThat(insertedOrder.getItems().get(0).taxedAmount(), is(new BigDecimal("7.84")));
-        assertThat(insertedOrder.getItems().get(0).tax(), is(new BigDecimal("0.72")));
-
         assertThat(insertedOrder.getItems().get(0),
                 is(new OrderItem(
                         Product.createWithName("salad").price("3.56").category(food).build(), 2)));
         assertThat(insertedOrder.getItems().get(0).taxedAmount(), is(new BigDecimal("7.84")));
         assertThat(insertedOrder.getItems().get(0).tax(), is(new BigDecimal("0.72")));
 
-        assertThat(insertedOrder.getItems().get(1).getProduct().getName(), is("tomato"));
-        assertThat(insertedOrder.getItems().get(1).getProduct().getPrice(), is(new BigDecimal("4.65")));
-        assertThat(insertedOrder.getItems().get(1).getQuantity(), is(3));
+        assertThat(insertedOrder.getItems().get(1),
+                is(new OrderItem(
+                        Product.createWithName("tomato").price("4.65").category(food).build(), 3)));
         assertThat(insertedOrder.getItems().get(1).taxedAmount(), is(new BigDecimal("15.36")));
         assertThat(insertedOrder.getItems().get(1).tax(), is(new BigDecimal("1.41")));
     }
