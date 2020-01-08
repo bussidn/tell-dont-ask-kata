@@ -11,7 +11,7 @@ public class Product {
     private final BigDecimal price;
     private final Category category;
 
-    public Product(String name, BigDecimal price, Category category) {
+    private Product(String name, BigDecimal price, Category category) {
         this.name = name;
         this.price = price;
         this.category = category;
