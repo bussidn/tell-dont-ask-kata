@@ -8,8 +8,6 @@ import it.gabrieletondi.telldontaskkata.repository.OrderRepository;
 import it.gabrieletondi.telldontaskkata.repository.ProductCatalog;
 import it.gabrieletondi.telldontaskkata.useCase.UnknownProductException;
 
-import java.util.ArrayList;
-
 public class OrderCreationUseCase {
     private final OrderRepository orderRepository;
     private final ProductCatalog productCatalog;
@@ -20,11 +18,10 @@ public class OrderCreationUseCase {
     }
 
     public void run(SellItemsRequest request) {
-        Order order = new Order();
-        order.setId(request.orderId());
-        order.setStatus(OrderStatus.CREATED);
-        order.setItems(new ArrayList<>());
-        order.setCurrency("EUR");
+        Order order = Order.createWithId(request.orderId())
+                .status(OrderStatus.CREATED)
+                .currency("EUR")
+                .build();
 
         for (SellItemRequest itemRequest : request.getRequests()) {
             Product product = productCatalog.findByName(itemRequest.getProductName())

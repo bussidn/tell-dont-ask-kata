@@ -5,16 +5,32 @@ import it.gabrieletondi.telldontaskkata.domain.OrderStatus;
 import it.gabrieletondi.telldontaskkata.service.ShipmentService;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 import static it.gabrieletondi.telldontaskkata.domain.OrderStatus.CREATED;
 
 public class Order {
-    private String currency;
-    private List<OrderItem> items;
-    private OrderStatus status;
     private int id;
+    private String currency;
+    private OrderStatus status;
+    private List<OrderItem> items;
+
+    public Order() {
+
+    }
+
+    public Order(int id, OrderStatus status, String currency, List<OrderItem> items) {
+        this.id = id;
+        this.status = status;
+        this.currency = currency;
+        this.items = items;
+    }
+
+    public static Order.Builder createWithId(int orderId) {
+        return new Order.Builder(orderId);
+    }
 
     public BigDecimal getTotal() {
         return items.stream()
@@ -26,16 +42,8 @@ public class Order {
         return currency;
     }
 
-    public void setCurrency(String currency) {
-        this.currency = currency;
-    }
-
     public List<OrderItem> getItems() {
         return items;
-    }
-
-    public void setItems(List<OrderItem> items) {
-        this.items = items;
     }
 
     public BigDecimal getTax() {
@@ -123,5 +131,30 @@ public class Order {
 
     private boolean isCreated() {
         return status.equals(CREATED);
+    }
+
+    public static class Builder {
+        private final int id;
+        private OrderStatus status;
+        private String currency;
+        private List<OrderItem> items = new ArrayList<>();
+
+        Builder(int id) {
+            this.id = id;
+        }
+
+        public Builder status(OrderStatus status) {
+            this.status = status;
+            return this;
+        }
+
+        public Builder currency(String currency) {
+            this.currency = currency;
+            return this;
+        }
+
+        public Order build() {
+            return new Order(id, status, currency, items);
+        }
     }
 }
