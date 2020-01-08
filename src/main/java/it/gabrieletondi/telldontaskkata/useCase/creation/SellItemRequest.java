@@ -17,14 +17,6 @@ public class SellItemRequest {
         this.productName = productName;
     }
 
-    int getQuantity() {
-        return quantity;
-    }
-
-    String getProductName() {
-        return productName;
-    }
-
     SellItemCommand toSellItemCommand(ProductCatalog productCatalog) {
         return new SellItemCommand(productName, quantity, productCatalog);
     }

@@ -14,7 +14,6 @@ public class OrderCreationUseCase {
     }
 
     public void run(SellItemsRequest request) {
-
         request.toSellItemsCommand(orderRepository, productCatalog)
                 .run();
     }
