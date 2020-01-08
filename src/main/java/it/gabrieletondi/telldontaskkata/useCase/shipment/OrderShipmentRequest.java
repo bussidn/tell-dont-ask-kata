@@ -5,11 +5,7 @@ import it.gabrieletondi.telldontaskkata.repository.OrderRepository;
 import it.gabrieletondi.telldontaskkata.service.ShipmentService;
 
 public class OrderShipmentRequest {
-    private int orderId;
-
-    public void setOrderId(int orderId) {
-        this.orderId = orderId;
-    }
+    public int orderId;
 
     FunctionalOrderShipCommand toFunctionalShipCommand(OrderRepository orderRepository, ShipmentService shipmentService) {
         return new FunctionalOrderShipCommand(orderId, orderRepository, shipmentService);
