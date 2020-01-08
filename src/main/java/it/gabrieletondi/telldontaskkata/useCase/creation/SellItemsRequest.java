@@ -1,13 +1,12 @@
 package it.gabrieletondi.telldontaskkata.useCase.creation;
 
 import it.gabrieletondi.telldontaskkata.domain.OrderItem;
-import it.gabrieletondi.telldontaskkata.domain.Product;
 import it.gabrieletondi.telldontaskkata.domain.order.Order;
 import it.gabrieletondi.telldontaskkata.repository.OrderRepository;
 import it.gabrieletondi.telldontaskkata.repository.ProductCatalog;
-import it.gabrieletondi.telldontaskkata.useCase.UnknownProductException;
 
 import java.util.List;
+import java.util.function.Function;
 
 public class SellItemsRequest {
 
@@ -49,28 +48,21 @@ public class SellItemsRequest {
         public void run() {
             Order order = Order.initializeOrderWith(EURO, id);
 
-            for (SellItemRequest itemRequest : requests) {
-                order.add(orderItemFrom(itemRequest));
-            }
+            requests.stream()
+                    .map(toCommand())
+                    .map(toOrderItem())
+                    .forEach(order::add);
 
             orderRepository.save(order);
         }
 
-        private OrderItem orderItemFrom(SellItemRequest itemRequest) {
-            return orderItem(productFrom(itemRequest), quantityFrom(itemRequest));
+        private Function<SellItemRequest.SellItemCommand, OrderItem> toOrderItem() {
+            return SellItemRequest.SellItemCommand::toOrderItem;
         }
 
-        private int quantityFrom(SellItemRequest itemRequest) {
-            return itemRequest.getQuantity();
+        private Function<SellItemRequest, SellItemRequest.SellItemCommand> toCommand() {
+            return sellItemRequest -> sellItemRequest.toSellItemCommand(productCatalog);
         }
 
-        private Product productFrom(SellItemRequest itemRequest) {
-            return productCatalog.findByName(itemRequest.getProductName())
-                    .orElseThrow(UnknownProductException::new);
-        }
-
-        private OrderItem orderItem(Product product, int quantity) {
-            return new OrderItem(product, quantity);
-        }
     }
 }
