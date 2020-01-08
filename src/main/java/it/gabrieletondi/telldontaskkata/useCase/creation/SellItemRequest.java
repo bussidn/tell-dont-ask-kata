@@ -28,7 +28,6 @@ public class SellItemRequest {
         private ProductCatalog productCatalog;
 
         SellItemCommand(String productName, int quantity, ProductCatalog productCatalog) {
-
             this.productName = productName;
             this.quantity = quantity;
             this.productCatalog = productCatalog;

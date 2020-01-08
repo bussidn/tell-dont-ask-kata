@@ -48,12 +48,14 @@ public class SellItemsRequest {
         }
 
         public void run() {
-            Order order = requests.stream()
-                    .map(toCommand())
-                    .map(toOrderItem())
-                    .reduce(initializeOrderWith(EURO, id), Order::add, (o1, o2) -> null);
+            orderRepository.save(toOrder());
+        }
 
-            orderRepository.save(order);
+        private Order toOrder() {
+            return requests.stream()
+                            .map(toCommand())
+                            .map(toOrderItem())
+                            .reduce(initializeOrderWith(EURO, id), Order::add, (o1, o2) -> null);
         }
 
         private Function<SellItemRequest.SellItemCommand, OrderItem> toOrderItem() {
