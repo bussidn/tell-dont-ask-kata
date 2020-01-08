@@ -2,10 +2,13 @@ package it.gabrieletondi.telldontaskkata.domain.order;
 
 import it.gabrieletondi.telldontaskkata.domain.OrderItem;
 import it.gabrieletondi.telldontaskkata.domain.OrderStatus;
+import it.gabrieletondi.telldontaskkata.service.ShipmentService;
 
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
+
+import static it.gabrieletondi.telldontaskkata.domain.OrderStatus.*;
 
 public class Order {
     private BigDecimal total;
@@ -63,7 +66,7 @@ public class Order {
         this.id = id;
     }
 
-    public boolean isShipped() {
+    private boolean isShipped() {
         return status.equals(OrderStatus.SHIPPED);
     }
 
@@ -108,5 +111,23 @@ public class Order {
     @Override
     public int hashCode() {
         return Objects.hash(id);
+    }
+
+    public void shipWith(ShipmentService shipmentService) {
+        if (isCreated() || isRejected()) {
+            throw new OrderCannotBeShippedException();
+        }
+
+        if (isShipped()) {
+            throw new OrderCannotBeShippedTwiceException();
+        }
+
+        shipmentService.ship(this);
+
+        setStatus(OrderStatus.SHIPPED);
+    }
+
+    private boolean isCreated() {
+        return status.equals(CREATED);
     }
 }
