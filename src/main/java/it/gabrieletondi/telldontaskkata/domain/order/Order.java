@@ -8,10 +8,9 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
 
-import static it.gabrieletondi.telldontaskkata.domain.OrderStatus.*;
+import static it.gabrieletondi.telldontaskkata.domain.OrderStatus.CREATED;
 
 public class Order {
-    private BigDecimal total;
     private String currency;
     private List<OrderItem> items;
     private BigDecimal tax;
@@ -19,11 +18,9 @@ public class Order {
     private int id;
 
     public BigDecimal getTotal() {
-        return total;
-    }
-
-    public void setTotal(BigDecimal total) {
-        this.total = total;
+        return items.stream()
+                .map(OrderItem::taxedAmount)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
     public String getCurrency() {

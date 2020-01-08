@@ -25,7 +25,6 @@ public class OrderCreationUseCase {
         order.setStatus(OrderStatus.CREATED);
         order.setItems(new ArrayList<>());
         order.setCurrency("EUR");
-        order.setTotal(new BigDecimal("0.00"));
         order.setTax(new BigDecimal("0.00"));
 
         for (SellItemRequest itemRequest : request.getRequests()) {
@@ -36,11 +35,9 @@ public class OrderCreationUseCase {
 
             final OrderItem orderItem = orderItem(product, quantity);
 
-            final BigDecimal taxedAmount = orderItem.taxedAmount();
             final BigDecimal taxAmount = orderItem.tax();
             order.getItems().add(orderItem);
 
-            order.setTotal(order.getTotal().add(taxedAmount));
             order.setTax(order.getTax().add(taxAmount));
         }
 
