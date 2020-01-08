@@ -10,7 +10,7 @@ public class OrderApprovalUseCase {
     }
 
     public void run(OrderApprovalRequest request) {
-        request.toFunctionalRequest(orderRepository)
+        request.toFunctionalCommand(orderRepository)
                 .run();
     }
 

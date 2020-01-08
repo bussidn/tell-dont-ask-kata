@@ -7,16 +7,16 @@ public class OrderApprovalRequest {
     public int orderId;
     public boolean approved;
 
-    FunctionalOrderApprovalRequest toFunctionalRequest(OrderRepository orderRepository) {
-        return new FunctionalOrderApprovalRequest(orderId, approved, orderRepository);
+    FunctionalOrderApprovalCommand toFunctionalCommand(OrderRepository orderRepository) {
+        return new FunctionalOrderApprovalCommand(orderId, approved, orderRepository);
     }
 
-    public static class FunctionalOrderApprovalRequest {
+    public static class FunctionalOrderApprovalCommand {
         private final int orderId;
         private final boolean approved;
         private final OrderRepository orderRepository;
 
-        FunctionalOrderApprovalRequest(int orderId, boolean approved, OrderRepository orderRepository) {
+        FunctionalOrderApprovalCommand(int orderId, boolean approved, OrderRepository orderRepository) {
             this.orderId = orderId;
             this.approved = approved;
             this.orderRepository = orderRepository;
