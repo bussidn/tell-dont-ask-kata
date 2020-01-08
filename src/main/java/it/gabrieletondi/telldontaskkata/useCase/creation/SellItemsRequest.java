@@ -14,21 +14,21 @@ import static it.gabrieletondi.telldontaskkata.domain.order.Order.initializeOrde
 public class SellItemsRequest {
 
     private final int id;
-    private List<SellItemRequest> requests = new ArrayList<>();
+    private final List<SellItemRequest> requests = new ArrayList<>();
 
     public SellItemsRequest(int id) {
         this.id = id;
     }
 
-    OrderCreationCommand toSellItemsCommand(OrderRepository orderRepository, ProductCatalog productCatalog) {
-        return new OrderCreationCommand(id, requests, orderRepository, productCatalog);
+    CreateOrderCommand toSellItemsCommand(OrderRepository orderRepository, ProductCatalog productCatalog) {
+        return new CreateOrderCommand(id, requests, orderRepository, productCatalog);
     }
 
     public void add(SellItemRequest sellItemRequest) {
         requests.add(sellItemRequest);
     }
 
-    class OrderCreationCommand {
+    class CreateOrderCommand {
 
         private static final String EURO = "EUR";
 
@@ -37,7 +37,7 @@ public class SellItemsRequest {
         private final OrderRepository orderRepository;
         private final ProductCatalog productCatalog;
 
-        OrderCreationCommand(int id, List<SellItemRequest> requests, OrderRepository orderRepository, ProductCatalog productCatalog) {
+        CreateOrderCommand(int id, List<SellItemRequest> requests, OrderRepository orderRepository, ProductCatalog productCatalog) {
             this.id = id;
             this.requests = requests;
             this.orderRepository = orderRepository;

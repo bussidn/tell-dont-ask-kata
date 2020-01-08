@@ -13,7 +13,6 @@ import it.gabrieletondi.telldontaskkata.useCase.creation.SellItemsRequest;
 import org.junit.Test;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.Arrays;
 
 import static org.hamcrest.Matchers.hasSize;

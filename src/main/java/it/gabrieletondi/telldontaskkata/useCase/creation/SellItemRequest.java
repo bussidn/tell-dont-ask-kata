@@ -17,7 +17,7 @@ public class SellItemRequest {
 
         private final String productName;
         private final int quantity;
-        private ProductCatalog productCatalog;
+        private final ProductCatalog productCatalog;
 
         SellItemCommand(String productName, int quantity, ProductCatalog productCatalog) {
             this.productName = productName;
