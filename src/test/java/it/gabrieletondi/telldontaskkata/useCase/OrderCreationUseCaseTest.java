@@ -23,9 +23,7 @@ import static org.junit.Assert.assertThat;
 
 public class OrderCreationUseCaseTest {
     private final TestOrderRepository orderRepository = new TestOrderRepository();
-    private final Category food = new Category() {{
-        setTaxPercentage(new BigDecimal("10"));
-    }};
+    private final Category food = Category.withPercentage("10");
     private final ProductCatalog productCatalog = new InMemoryProductCatalog(
             Arrays.asList(
                     createWithName("salad")
