@@ -135,7 +135,7 @@ public class Order {
 
     public static class Builder {
         private final int id;
-        private OrderStatus status;
+        private OrderStatus status = CREATED;
         private String currency;
         private List<OrderItem> items = new ArrayList<>();
 
