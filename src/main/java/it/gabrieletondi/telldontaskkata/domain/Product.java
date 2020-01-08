@@ -1,6 +1,10 @@
 package it.gabrieletondi.telldontaskkata.domain;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
+
+import static java.math.BigDecimal.valueOf;
+import static java.math.RoundingMode.HALF_UP;
 
 public class Product {
     private String name;
@@ -11,7 +15,7 @@ public class Product {
         return name;
     }
 
-    public void setName(String name) {
+    protected void setName(String name) {
         this.name = name;
     }
 
@@ -19,15 +23,18 @@ public class Product {
         return price;
     }
 
-    public void setPrice(BigDecimal price) {
+    protected void setPrice(BigDecimal price) {
         this.price = price;
     }
 
-    public Category getCategory() {
-        return category;
+    protected void setCategory(Category category) {
+        this.category = category;
     }
 
-    public void setCategory(Category category) {
-        this.category = category;
+    public BigDecimal unitaryTax() {
+        return getPrice()
+                .divide(valueOf(100), getPrice().scale() + 2, RoundingMode.UNNECESSARY)
+                .multiply(category.getTaxPercentage())
+                .setScale(2, HALF_UP);
     }
 }
