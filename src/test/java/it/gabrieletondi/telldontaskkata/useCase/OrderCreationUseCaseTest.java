@@ -1,9 +1,9 @@
 package it.gabrieletondi.telldontaskkata.useCase;
 
 import it.gabrieletondi.telldontaskkata.domain.Category;
-import it.gabrieletondi.telldontaskkata.domain.order.Order;
 import it.gabrieletondi.telldontaskkata.domain.OrderStatus;
 import it.gabrieletondi.telldontaskkata.domain.Product;
+import it.gabrieletondi.telldontaskkata.domain.order.Order;
 import it.gabrieletondi.telldontaskkata.doubles.InMemoryProductCatalog;
 import it.gabrieletondi.telldontaskkata.doubles.TestOrderRepository;
 import it.gabrieletondi.telldontaskkata.repository.ProductCatalog;
@@ -61,6 +61,7 @@ public class OrderCreationUseCaseTest {
         useCase.run(request);
 
         final Order insertedOrder = orderRepository.getSavedOrder();
+        assertThat(insertedOrder.getId(), is(id));
         assertThat(insertedOrder.getStatus(), is(OrderStatus.CREATED));
         assertThat(insertedOrder.getTotal(), is(new BigDecimal("23.20")));
         assertThat(insertedOrder.getTax(), is(new BigDecimal("2.13")));
