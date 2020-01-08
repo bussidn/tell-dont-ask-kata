@@ -28,6 +28,12 @@ public class Order {
         return new Order.Builder(orderId);
     }
 
+    public static Order initializeOrderWith(String euro, int orderId) {
+        return createOrderWithId(orderId)
+                .currency(euro)
+                .build();
+    }
+
     public BigDecimal getTotal() {
         return items.stream()
                 .map(OrderItem::taxedAmount)
@@ -125,6 +131,10 @@ public class Order {
         return status.equals(CREATED);
     }
 
+    public void add(OrderItem orderItem) {
+        items.add(orderItem);
+    }
+
     public static class Builder {
         private final int id;
         private OrderStatus status = CREATED;
@@ -140,7 +150,7 @@ public class Order {
             return this;
         }
 
-        public Builder currency(String currency) {
+        Builder currency(String currency) {
             this.currency = currency;
             return this;
         }
