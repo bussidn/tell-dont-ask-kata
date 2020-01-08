@@ -1,7 +1,6 @@
 package it.gabrieletondi.telldontaskkata.domain;
 
 import java.math.BigDecimal;
-import java.math.RoundingMode;
 import java.util.Objects;
 import java.util.function.Predicate;
 
@@ -37,13 +36,8 @@ public class Product {
 
     private static BigDecimal calculateUnitaryTax(BigDecimal price, Category category) {
         return price
-                .multiply(percentageRatio(category))
+                .multiply(category.percentageRatio())
                 .setScale(2, HALF_UP);
-    }
-
-    private static BigDecimal percentageRatio(Category category) {
-        return category.getTaxPercentage()
-                .divide(valueOf(100), category.getTaxPercentage().scale() + 2, RoundingMode.UNNECESSARY);
     }
 
     BigDecimal unitaryTaxedAmount() {
