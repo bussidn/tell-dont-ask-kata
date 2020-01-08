@@ -17,10 +17,6 @@ public class Order {
     private OrderStatus status;
     private List<OrderItem> items;
 
-    public Order() {
-
-    }
-
     public Order(int id, OrderStatus status, String currency, List<OrderItem> items) {
         this.id = id;
         this.status = status;
@@ -62,10 +58,6 @@ public class Order {
 
     public int getId() {
         return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     private boolean isShipped() {
