@@ -11,8 +11,6 @@ import it.gabrieletondi.telldontaskkata.useCase.UnknownProductException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
-import static java.math.RoundingMode.HALF_UP;
-
 public class OrderCreationUseCase {
     private final OrderRepository orderRepository;
     private final ProductCatalog productCatalog;
@@ -38,11 +36,8 @@ public class OrderCreationUseCase {
 
             final OrderItem orderItem = orderItem(product, quantity);
 
-            final BigDecimal taxedAmount = product.unitaryTaxedAmount().multiply(BigDecimal.valueOf(orderItem.getQuantity())).setScale(2, HALF_UP);
-            final BigDecimal taxAmount = product.unitaryTax().multiply(BigDecimal.valueOf(orderItem.getQuantity()));
-
-            orderItem.setTax(taxAmount);
-            orderItem.setTaxedAmount(taxedAmount);
+            final BigDecimal taxedAmount = orderItem.taxedAmount();
+            final BigDecimal taxAmount = orderItem.tax();
             order.getItems().add(orderItem);
 
             order.setTotal(order.getTotal().add(taxedAmount));
