@@ -34,13 +34,13 @@ public class OrderCreationUseCase {
             Product product = productCatalog.findByName(itemRequest.getProductName())
                     .orElseThrow(UnknownProductException::new);
 
-            final BigDecimal unitaryTaxedAmount = product.unitaryTaxedAmount();
-            final BigDecimal taxedAmount = unitaryTaxedAmount.multiply(BigDecimal.valueOf(itemRequest.getQuantity())).setScale(2, HALF_UP);
-            final BigDecimal taxAmount = product.unitaryTax().multiply(BigDecimal.valueOf(itemRequest.getQuantity()));
+            int quantity = itemRequest.getQuantity();
 
-            final OrderItem orderItem = new OrderItem();
-            orderItem.setProduct(product);
-            orderItem.setQuantity(itemRequest.getQuantity());
+            final OrderItem orderItem = orderItem(product, quantity);
+
+            final BigDecimal taxedAmount = product.unitaryTaxedAmount().multiply(BigDecimal.valueOf(quantity)).setScale(2, HALF_UP);
+            final BigDecimal taxAmount = product.unitaryTax().multiply(BigDecimal.valueOf(quantity));
+
             orderItem.setTax(taxAmount);
             orderItem.setTaxedAmount(taxedAmount);
             order.getItems().add(orderItem);
@@ -50,6 +50,13 @@ public class OrderCreationUseCase {
         }
 
         orderRepository.save(order);
+    }
+
+    private OrderItem orderItem(Product product, int quantity) {
+        final OrderItem orderItem = new OrderItem();
+        orderItem.setProduct(product);
+        orderItem.setQuantity(quantity);
+        return orderItem;
     }
 
 }
