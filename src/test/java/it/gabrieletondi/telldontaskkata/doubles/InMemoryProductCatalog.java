@@ -13,10 +13,6 @@ public class InMemoryProductCatalog implements ProductCatalog {
         this.products = products;
     }
 
-    public Product getByName(final String name) {
-        return findByName(name).orElse(null);
-    }
-
     @Override
     public Optional<Product> findByName(String name) {
         return products.stream().filter(p -> p.getName().equals(name)).findFirst();
