@@ -37,9 +37,13 @@ public class Product {
 
     private static BigDecimal calculateUnitaryTax(BigDecimal price, Category category) {
         return price
-                .divide(valueOf(100), price.scale() + 2, RoundingMode.UNNECESSARY)
-                .multiply(category.getTaxPercentage())
+                .multiply(percentageRatio(category))
                 .setScale(2, HALF_UP);
+    }
+
+    private static BigDecimal percentageRatio(Category category) {
+        return category.getTaxPercentage()
+                .divide(valueOf(100), category.getTaxPercentage().scale() + 2, RoundingMode.UNNECESSARY);
     }
 
     BigDecimal unitaryTaxedAmount() {
