@@ -1,6 +1,5 @@
 package it.gabrieletondi.telldontaskkata.useCase.shipment;
 
-import it.gabrieletondi.telldontaskkata.domain.order.Order;
 import it.gabrieletondi.telldontaskkata.repository.OrderRepository;
 import it.gabrieletondi.telldontaskkata.service.ShipmentService;
 

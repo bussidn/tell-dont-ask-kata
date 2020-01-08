@@ -5,8 +5,8 @@ import java.math.BigDecimal;
 import static java.math.RoundingMode.HALF_UP;
 
 public class OrderItem {
-    private Product product;
-    private int quantity;
+    private final Product product;
+    private final int quantity;
 
     public OrderItem(Product product, int quantity) {
         this.product = product;

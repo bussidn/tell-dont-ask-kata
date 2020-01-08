@@ -12,12 +12,12 @@ import java.util.Objects;
 import static it.gabrieletondi.telldontaskkata.domain.OrderStatus.CREATED;
 
 public class Order {
-    private int id;
-    private String currency;
+    private final int id;
+    private final String currency;
     private OrderStatus status;
-    private List<OrderItem> items;
+    private final List<OrderItem> items;
 
-    public Order(int id, OrderStatus status, String currency, List<OrderItem> items) {
+    private Order(int id, OrderStatus status, String currency, List<OrderItem> items) {
         this.id = id;
         this.status = status;
         this.currency = currency;
@@ -139,7 +139,7 @@ public class Order {
         private final int id;
         private OrderStatus status = CREATED;
         private String currency;
-        private List<OrderItem> items = new ArrayList<>();
+        private final List<OrderItem> items = new ArrayList<>();
 
         Builder(int id) {
             this.id = id;

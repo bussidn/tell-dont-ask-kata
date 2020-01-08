@@ -20,7 +20,7 @@ import static org.junit.Assert.assertThat;
 public class OrderApprovalUseCaseTest {
 
     @Rule
-    public ExpectedException ee = ExpectedException.none();
+    public final ExpectedException ee = ExpectedException.none();
 
     private final TestOrderRepository orderRepository = new TestOrderRepository();
     private final OrderApprovalUseCase useCase = new OrderApprovalUseCase(orderRepository);
@@ -108,9 +108,8 @@ public class OrderApprovalUseCaseTest {
                 .status(OrderStatus.SHIPPED)
                 .build();
         orderRepository.addOrder(initialOrder);
-        boolean approved = false;
 
-        OrderApprovalRequest request = approvalOrRejectionRequest(1, approved);
+        OrderApprovalRequest request = approvalOrRejectionRequest(1, false);
 
         useCase.run(request);
 

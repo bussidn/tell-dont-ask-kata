@@ -12,11 +12,11 @@ public class SellItemRequest {
         this.productName = productName;
     }
 
-    public int getQuantity() {
+    int getQuantity() {
         return quantity;
     }
 
-    public String getProductName() {
+    String getProductName() {
         return productName;
     }
 }

@@ -26,11 +26,11 @@ public class SellItemsRequest {
         return requests;
     }
 
-    SellItemsCommand toSellItemsCommand(OrderRepository orderRepository, ProductCatalog productCatalog) {
-        return new SellItemsCommand(id, requests, orderRepository, productCatalog);
+    OrderCreationCommand toSellItemsCommand(OrderRepository orderRepository, ProductCatalog productCatalog) {
+        return new OrderCreationCommand(id, requests, orderRepository, productCatalog);
     }
 
-    class SellItemsCommand {
+    class OrderCreationCommand {
 
         private static final String EURO = "EUR";
 
@@ -39,7 +39,7 @@ public class SellItemsRequest {
         private final OrderRepository orderRepository;
         private final ProductCatalog productCatalog;
 
-        SellItemsCommand(int id, List<SellItemRequest> requests, OrderRepository orderRepository, ProductCatalog productCatalog) {
+        OrderCreationCommand(int id, List<SellItemRequest> requests, OrderRepository orderRepository, ProductCatalog productCatalog) {
             this.id = id;
             this.requests = requests;
             this.orderRepository = orderRepository;
