@@ -6,16 +6,8 @@ import it.gabrieletondi.telldontaskkata.repository.ProductCatalog;
 import it.gabrieletondi.telldontaskkata.useCase.UnknownProductException;
 
 public class SellItemRequest {
-    private int quantity;
-    private String productName;
-
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
-
-    public void setProductName(String productName) {
-        this.productName = productName;
-    }
+    public int quantity;
+    public String productName;
 
     SellItemCommand toSellItemCommand(ProductCatalog productCatalog) {
         return new SellItemCommand(productName, quantity, productCatalog);
