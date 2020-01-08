@@ -34,10 +34,9 @@ public class OrderCreationUseCase {
             Product product = productCatalog.findByName(itemRequest.getProductName())
                     .orElseThrow(UnknownProductException::new);
 
-            final BigDecimal unitaryTax = product.unitaryTax();
-            final BigDecimal unitaryTaxedAmount = product.getPrice().add(unitaryTax).setScale(2, HALF_UP);
+            final BigDecimal unitaryTaxedAmount = product.unitaryTaxedAmount();
             final BigDecimal taxedAmount = unitaryTaxedAmount.multiply(BigDecimal.valueOf(itemRequest.getQuantity())).setScale(2, HALF_UP);
-            final BigDecimal taxAmount = unitaryTax.multiply(BigDecimal.valueOf(itemRequest.getQuantity()));
+            final BigDecimal taxAmount = product.unitaryTax().multiply(BigDecimal.valueOf(itemRequest.getQuantity()));
 
             final OrderItem orderItem = new OrderItem();
             orderItem.setProduct(product);
