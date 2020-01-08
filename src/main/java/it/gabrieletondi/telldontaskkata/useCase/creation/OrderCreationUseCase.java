@@ -8,7 +8,6 @@ import it.gabrieletondi.telldontaskkata.repository.OrderRepository;
 import it.gabrieletondi.telldontaskkata.repository.ProductCatalog;
 import it.gabrieletondi.telldontaskkata.useCase.UnknownProductException;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 
 public class OrderCreationUseCase {
@@ -25,7 +24,6 @@ public class OrderCreationUseCase {
         order.setStatus(OrderStatus.CREATED);
         order.setItems(new ArrayList<>());
         order.setCurrency("EUR");
-        order.setTax(new BigDecimal("0.00"));
 
         for (SellItemRequest itemRequest : request.getRequests()) {
             Product product = productCatalog.findByName(itemRequest.getProductName())
@@ -34,11 +32,7 @@ public class OrderCreationUseCase {
             int quantity = itemRequest.getQuantity();
 
             final OrderItem orderItem = orderItem(product, quantity);
-
-            final BigDecimal taxAmount = orderItem.tax();
             order.getItems().add(orderItem);
-
-            order.setTax(order.getTax().add(taxAmount));
         }
 
         orderRepository.save(order);

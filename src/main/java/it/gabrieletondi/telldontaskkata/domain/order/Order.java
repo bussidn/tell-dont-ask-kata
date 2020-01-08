@@ -13,7 +13,6 @@ import static it.gabrieletondi.telldontaskkata.domain.OrderStatus.CREATED;
 public class Order {
     private String currency;
     private List<OrderItem> items;
-    private BigDecimal tax;
     private OrderStatus status;
     private int id;
 
@@ -40,11 +39,9 @@ public class Order {
     }
 
     public BigDecimal getTax() {
-        return tax;
-    }
-
-    public void setTax(BigDecimal tax) {
-        this.tax = tax;
+        return items.stream()
+                .map(OrderItem::tax)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
     }
 
     public OrderStatus getStatus() {
