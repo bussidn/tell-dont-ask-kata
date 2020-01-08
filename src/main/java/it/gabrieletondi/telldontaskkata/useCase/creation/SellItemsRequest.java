@@ -5,6 +5,7 @@ import it.gabrieletondi.telldontaskkata.domain.order.Order;
 import it.gabrieletondi.telldontaskkata.repository.OrderRepository;
 import it.gabrieletondi.telldontaskkata.repository.ProductCatalog;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
@@ -13,14 +14,10 @@ import static it.gabrieletondi.telldontaskkata.domain.order.Order.initializeOrde
 public class SellItemsRequest {
 
     private final int id;
-    private List<SellItemRequest> requests;
+    private List<SellItemRequest> requests = new ArrayList<>();
 
     public SellItemsRequest(int id) {
         this.id = id;
-    }
-
-    public void setRequests(List<SellItemRequest> requests) {
-        this.requests = requests;
     }
 
     public List<SellItemRequest> getRequests() {
