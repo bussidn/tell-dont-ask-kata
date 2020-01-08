@@ -12,11 +12,15 @@ public class Product {
     private final String name;
     private final BigDecimal price;
     private final Category category;
+    private final BigDecimal unitaryTax;
+    private final BigDecimal unitaryTaxedAmount;
 
     private Product(String name, BigDecimal price, Category category) {
         this.name = name;
         this.price = price;
         this.category = category;
+        this.unitaryTax = calculateUnitaryTax(price, category);
+        this.unitaryTaxedAmount = calculateUnitaryTaxedAmount(price, unitaryTax);
     }
 
     public static Product.Builder createWithName(String name) {
@@ -28,6 +32,10 @@ public class Product {
     }
 
     BigDecimal unitaryTax() {
+        return unitaryTax;
+    }
+
+    private static BigDecimal calculateUnitaryTax(BigDecimal price, Category category) {
         return price
                 .divide(valueOf(100), price.scale() + 2, RoundingMode.UNNECESSARY)
                 .multiply(category.getTaxPercentage())
@@ -35,7 +43,11 @@ public class Product {
     }
 
     BigDecimal unitaryTaxedAmount() {
-        return price.add(unitaryTax()).setScale(2, HALF_UP);
+        return unitaryTaxedAmount;
+    }
+
+    private static BigDecimal calculateUnitaryTaxedAmount(BigDecimal price, BigDecimal unitaryTax) {
+        return price.add(unitaryTax).setScale(2, HALF_UP);
     }
 
     public static class Builder {
