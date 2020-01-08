@@ -8,6 +8,8 @@ import it.gabrieletondi.telldontaskkata.repository.ProductCatalog;
 import java.util.List;
 import java.util.function.Function;
 
+import static it.gabrieletondi.telldontaskkata.domain.order.Order.initializeOrderWith;
+
 public class SellItemsRequest {
 
     private final int id;
@@ -46,12 +48,10 @@ public class SellItemsRequest {
         }
 
         public void run() {
-            Order order = Order.initializeOrderWith(EURO, id);
-
-            requests.stream()
+            Order order = requests.stream()
                     .map(toCommand())
                     .map(toOrderItem())
-                    .forEach(order::add);
+                    .reduce(initializeOrderWith(EURO, id), Order::add, (o1, o2) -> null);
 
             orderRepository.save(order);
         }

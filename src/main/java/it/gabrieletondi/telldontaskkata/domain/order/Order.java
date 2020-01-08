@@ -131,8 +131,9 @@ public class Order {
         return status.equals(CREATED);
     }
 
-    public void add(OrderItem orderItem) {
+    public Order add(OrderItem orderItem) {
         items.add(orderItem);
+        return this;
     }
 
     public static class Builder {
