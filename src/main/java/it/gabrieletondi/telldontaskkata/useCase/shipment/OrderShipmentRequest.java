@@ -11,10 +11,6 @@ public class OrderShipmentRequest {
         this.orderId = orderId;
     }
 
-    int getOrderId() {
-        return orderId;
-    }
-
     FunctionalOrderShipCommand toFunctionalShipCommand(OrderRepository orderRepository, ShipmentService shipmentService) {
         return new FunctionalOrderShipCommand(orderId, orderRepository, shipmentService);
     }
