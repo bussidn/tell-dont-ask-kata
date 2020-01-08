@@ -58,10 +58,6 @@ public class Order {
         return status;
     }
 
-    private void setStatus(OrderStatus status) {
-        this.status = status;
-    }
-
     public int getId() {
         return id;
     }
@@ -89,7 +85,7 @@ public class Order {
         if (isRejected()) {
             throw new RejectedOrderCannotBeApprovedException();
         }
-        setStatus(OrderStatus.APPROVED);
+        this.status = OrderStatus.APPROVED;
     }
 
     public void reject() {
@@ -97,7 +93,7 @@ public class Order {
         if (isApproved()) {
             throw new ApprovedOrderCannotBeRejectedException();
         }
-        setStatus(OrderStatus.REJECTED);
+        this.status = OrderStatus.REJECTED;
     }
 
     @Override
@@ -124,7 +120,7 @@ public class Order {
 
         shipmentService.ship(this);
 
-        setStatus(OrderStatus.SHIPPED);
+        this.status = OrderStatus.SHIPPED;
     }
 
     private boolean isCreated() {
