@@ -11,10 +11,6 @@ public class Product {
     private BigDecimal price;
     private Category category;
 
-    public Product() {
-
-    }
-
     public Product(String name, BigDecimal price, Category category) {
         this.name = name;
         this.price = price;
