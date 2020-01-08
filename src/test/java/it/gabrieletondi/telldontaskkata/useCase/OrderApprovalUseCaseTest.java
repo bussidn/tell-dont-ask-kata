@@ -12,6 +12,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import static it.gabrieletondi.telldontaskkata.domain.order.Order.createOrderWithId;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
@@ -96,22 +97,20 @@ public class OrderApprovalUseCaseTest {
     }
 
     private Order createOrder(int id, OrderStatus shipped) {
-        Order initialOrder = new Order();
-        initialOrder.setStatus(shipped);
-        initialOrder.setId(id);
-        return initialOrder;
+        return createOrderWithId(id)
+                .status(shipped)
+                .build();
     }
 
     @Test(expected = ShippedOrdersCannotBeChangedException.class)
     public void shippedOrdersCannotBeRejected() {
-        Order initialOrder = new Order();
-        initialOrder.setStatus(OrderStatus.SHIPPED);
-        int orderId = 1;
-        initialOrder.setId(orderId);
+        Order initialOrder = createOrderWithId(1)
+                .status(OrderStatus.SHIPPED)
+                .build();
         orderRepository.addOrder(initialOrder);
         boolean approved = false;
 
-        OrderApprovalRequest request = approvalOrRejectionRequest(orderId, approved);
+        OrderApprovalRequest request = approvalOrRejectionRequest(1, approved);
 
         useCase.run(request);
 

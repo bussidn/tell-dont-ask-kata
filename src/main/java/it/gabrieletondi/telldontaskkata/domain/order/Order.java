@@ -28,7 +28,7 @@ public class Order {
         this.items = items;
     }
 
-    public static Order.Builder createWithId(int orderId) {
+    public static Order.Builder createOrderWithId(int orderId) {
         return new Order.Builder(orderId);
     }
 
@@ -56,7 +56,7 @@ public class Order {
         return status;
     }
 
-    public void setStatus(OrderStatus status) {
+    private void setStatus(OrderStatus status) {
         this.status = status;
     }
 

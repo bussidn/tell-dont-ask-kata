@@ -18,7 +18,7 @@ public class OrderCreationUseCase {
     }
 
     public void run(SellItemsRequest request) {
-        Order order = Order.createWithId(request.orderId())
+        Order order = Order.createOrderWithId(request.orderId())
                 .status(OrderStatus.CREATED)
                 .currency("EUR")
                 .build();

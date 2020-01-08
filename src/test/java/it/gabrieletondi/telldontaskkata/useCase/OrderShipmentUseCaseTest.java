@@ -10,6 +10,7 @@ import it.gabrieletondi.telldontaskkata.useCase.shipment.OrderShipmentRequest;
 import it.gabrieletondi.telldontaskkata.useCase.shipment.OrderShipmentUseCase;
 import org.junit.Test;
 
+import static it.gabrieletondi.telldontaskkata.domain.order.Order.createOrderWithId;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
@@ -21,9 +22,9 @@ public class OrderShipmentUseCaseTest {
 
     @Test
     public void shipApprovedOrder() {
-        Order initialOrder = new Order();
-        initialOrder.setId(1);
-        initialOrder.setStatus(OrderStatus.APPROVED);
+        Order initialOrder = createOrderWithId(1)
+                .status(OrderStatus.APPROVED)
+                .build();
         orderRepository.addOrder(initialOrder);
 
         OrderShipmentRequest request = new OrderShipmentRequest();
@@ -37,9 +38,8 @@ public class OrderShipmentUseCaseTest {
 
     @Test(expected = OrderCannotBeShippedException.class)
     public void createdOrdersCannotBeShipped() {
-        Order initialOrder = new Order();
-        initialOrder.setId(1);
-        initialOrder.setStatus(OrderStatus.CREATED);
+        Order initialOrder = Order.createOrderWithId(1)
+                .status(OrderStatus.CREATED).build();
         orderRepository.addOrder(initialOrder);
 
         OrderShipmentRequest request = new OrderShipmentRequest();
@@ -53,9 +53,8 @@ public class OrderShipmentUseCaseTest {
 
     @Test(expected = OrderCannotBeShippedException.class)
     public void rejectedOrdersCannotBeShipped() {
-        Order initialOrder = new Order();
-        initialOrder.setId(1);
-        initialOrder.setStatus(OrderStatus.REJECTED);
+        Order initialOrder = Order.createOrderWithId(1)
+                .status(OrderStatus.REJECTED).build();
         orderRepository.addOrder(initialOrder);
 
         OrderShipmentRequest request = new OrderShipmentRequest();
@@ -69,9 +68,8 @@ public class OrderShipmentUseCaseTest {
 
     @Test(expected = OrderCannotBeShippedTwiceException.class)
     public void shippedOrdersCannotBeShippedAgain() {
-        Order initialOrder = new Order();
-        initialOrder.setId(1);
-        initialOrder.setStatus(OrderStatus.SHIPPED);
+        Order initialOrder = Order.createOrderWithId(1)
+                .status(OrderStatus.SHIPPED).build();
         orderRepository.addOrder(initialOrder);
 
         OrderShipmentRequest request = new OrderShipmentRequest();
