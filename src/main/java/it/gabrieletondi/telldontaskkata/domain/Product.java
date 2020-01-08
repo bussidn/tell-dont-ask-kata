@@ -2,6 +2,7 @@ package it.gabrieletondi.telldontaskkata.domain;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Objects;
 
 import static java.math.BigDecimal.valueOf;
 import static java.math.RoundingMode.HALF_UP;
@@ -30,8 +31,8 @@ public class Product {
     }
 
     BigDecimal unitaryTax() {
-        return getPrice()
-                .divide(valueOf(100), getPrice().scale() + 2, RoundingMode.UNNECESSARY)
+        return price
+                .divide(valueOf(100), price.scale() + 2, RoundingMode.UNNECESSARY)
                 .multiply(category.getTaxPercentage())
                 .setScale(2, HALF_UP);
     }
@@ -62,5 +63,20 @@ public class Product {
         public Product build() {
             return new Product(name, price, category);
         }
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Product product = (Product) o;
+        return name.equals(product.name) &&
+                price.equals(product.price) &&
+                category.equals(product.category);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, price, category);
     }
 }
