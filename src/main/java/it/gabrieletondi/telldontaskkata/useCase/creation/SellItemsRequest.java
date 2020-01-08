@@ -1,5 +1,7 @@
 package it.gabrieletondi.telldontaskkata.useCase.creation;
 
+import it.gabrieletondi.telldontaskkata.domain.OrderStatus;
+
 import java.util.List;
 
 public class SellItemsRequest {
@@ -16,5 +18,9 @@ public class SellItemsRequest {
 
     public List<SellItemRequest> getRequests() {
         return requests;
+    }
+
+    int orderId() {
+        return id;
     }
 }

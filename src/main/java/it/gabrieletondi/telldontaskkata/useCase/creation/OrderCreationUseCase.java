@@ -21,6 +21,7 @@ public class OrderCreationUseCase {
 
     public void run(SellItemsRequest request) {
         Order order = new Order();
+        order.setId(request.orderId());
         order.setStatus(OrderStatus.CREATED);
         order.setItems(new ArrayList<>());
         order.setCurrency("EUR");
