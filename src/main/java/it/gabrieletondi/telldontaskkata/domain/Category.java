@@ -8,12 +8,12 @@ import static java.math.BigDecimal.valueOf;
 public class Category {
     private BigDecimal taxPercentage;
 
-    private Category(String taxPercentage) {
-        this.taxPercentage = new BigDecimal(taxPercentage);
+    private Category(BigDecimal taxPercentage) {
+        this.taxPercentage = taxPercentage;
     }
 
     public static Category withPercentage(String taxPercentage) {
-        return new Category(taxPercentage);
+        return new Category(new BigDecimal(taxPercentage));
     }
 
     BigDecimal percentageRatio() {
