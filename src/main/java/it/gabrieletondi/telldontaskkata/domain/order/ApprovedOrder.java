@@ -1,7 +1,6 @@
 package it.gabrieletondi.telldontaskkata.domain.order;
 
 import it.gabrieletondi.telldontaskkata.domain.OrderItem;
-import it.gabrieletondi.telldontaskkata.domain.OrderStatus;
 import it.gabrieletondi.telldontaskkata.service.Shipping;
 
 import java.util.List;
@@ -15,5 +14,15 @@ public class ApprovedOrder extends Order {
 
     public ShippedOrder shipWith(Shipping shipping) {
         return shipping.ship(this.sentToShippingService());
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        return super.equals(o);
+    }
+
+    @Override
+    public int hashCode() {
+        return super.hashCode();
     }
 }
