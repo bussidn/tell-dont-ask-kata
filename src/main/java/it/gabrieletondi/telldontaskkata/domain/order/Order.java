@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.function.Function;
 
 import static it.gabrieletondi.telldontaskkata.domain.OrderStatus.*;
 
@@ -22,6 +23,10 @@ public class Order {
         this.status = status;
         this.currency = currency;
         this.items = items;
+    }
+
+    <T extends Order> Function<OrderStatus, T> statusFactory(Function<Integer, Function<OrderStatus, Function<String, Function<List<OrderItem>, T>>>> constructor) {
+        return status -> constructor.apply(id).apply(status).apply(currency).apply(items);
     }
 
     public ToBeShippedOrder toBeShipped() {

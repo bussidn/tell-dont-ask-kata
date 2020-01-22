@@ -13,6 +13,6 @@ public class ToBeShippedOrder extends Order {
     }
 
     public ShippedOrder asShippedOrder() {
-        return new ShippedOrder(getId(), SHIPPED, getCurrency(), getItems());
+        return statusFactory(ShippedOrder.constructorAsFunction()).apply(SHIPPED);
     }
 }
