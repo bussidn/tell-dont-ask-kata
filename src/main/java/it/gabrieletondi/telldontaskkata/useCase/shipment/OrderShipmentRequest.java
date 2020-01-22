@@ -25,8 +25,7 @@ public class OrderShipmentRequest {
 
         void run() {
             final Order order = orderRepository.getById(orderId);
-            order.shipWith(shipmentService);
-            orderRepository.save(order);
+            orderRepository.save(order.shipWith(shipmentService));
         }
     }
 }

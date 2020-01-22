@@ -80,20 +80,22 @@ public class Order {
         return status.equals(OrderStatus.APPROVED);
     }
 
-    public void approve() {
+    public Order approve() {
         throwIfShipped();
         if (isRejected()) {
             throw new RejectedOrderCannotBeApprovedException();
         }
         this.status = OrderStatus.APPROVED;
+        return this;
     }
 
-    public void reject() {
+    public Order reject() {
         throwIfShipped();
         if (isApproved()) {
             throw new ApprovedOrderCannotBeRejectedException();
         }
         this.status = OrderStatus.REJECTED;
+        return this;
     }
 
     @Override
@@ -109,7 +111,7 @@ public class Order {
         return Objects.hash(id);
     }
 
-    public void shipWith(ShipmentService shipmentService) {
+    public Order shipWith(ShipmentService shipmentService) {
         if (isCreated() || isRejected()) {
             throw new OrderCannotBeShippedException();
         }
@@ -121,6 +123,7 @@ public class Order {
         shipmentService.ship(this);
 
         this.status = OrderStatus.SHIPPED;
+        return this;
     }
 
     private boolean isCreated() {

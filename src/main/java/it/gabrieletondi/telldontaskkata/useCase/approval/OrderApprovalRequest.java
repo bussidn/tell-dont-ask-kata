@@ -25,8 +25,7 @@ public class OrderApprovalRequest {
 
         void run() {
             final Order order = orderRepository.getById(orderId);
-            order.approve();
-            orderRepository.save(order);
+            orderRepository.save(order.approve());
         }
     }
 }

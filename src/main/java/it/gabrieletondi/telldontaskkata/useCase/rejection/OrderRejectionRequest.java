@@ -25,8 +25,7 @@ public class OrderRejectionRequest {
 
         void run() {
             final Order order = orderRepository.getById(orderId);
-            order.reject();
-            orderRepository.save(order);
+            orderRepository.save(order.reject());
         }
 
     }
