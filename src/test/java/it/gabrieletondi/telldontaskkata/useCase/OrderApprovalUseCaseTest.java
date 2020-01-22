@@ -60,10 +60,8 @@ public class OrderApprovalUseCaseTest {
         int orderId = 5;
         Order initialOrder = createOrder(orderId, OrderStatus.SHIPPED);
         orderRepository.addOrder(initialOrder);
+        OrderApprovalRequest approvalRequest = approvalRequest(orderId);
 
-        OrderApprovalRequest approvalRequest = new OrderApprovalRequest();
-        approvalRequest.orderId = orderId;
-        approvalRequest.approved = true;
 
         useCase.run(approvalRequest);
 
@@ -77,10 +75,7 @@ public class OrderApprovalUseCaseTest {
     }
 
     private OrderApprovalRequest approvalRequest(int orderId) {
-        OrderApprovalRequest request = new OrderApprovalRequest();
-        request.orderId = orderId;
-        request.approved = true;
-        return request;
+        return new OrderApprovalRequest(orderId);
     }
 
 }

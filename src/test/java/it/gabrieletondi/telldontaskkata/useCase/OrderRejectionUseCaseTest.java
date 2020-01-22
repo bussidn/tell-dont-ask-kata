@@ -79,9 +79,6 @@ public class OrderRejectionUseCaseTest {
     }
 
     private OrderApprovalRequest approvalOrRejectionRequest(int orderId, boolean approved) {
-        OrderApprovalRequest request = new OrderApprovalRequest();
-        request.orderId = orderId;
-        request.approved = approved;
-        return request;
+        return new OrderApprovalRequest(orderId);
     }
 }

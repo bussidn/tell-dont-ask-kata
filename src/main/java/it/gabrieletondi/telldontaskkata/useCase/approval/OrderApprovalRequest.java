@@ -5,33 +5,28 @@ import it.gabrieletondi.telldontaskkata.repository.OrderRepository;
 
 public class OrderApprovalRequest {
     public int orderId;
-    public boolean approved;
+
+    public OrderApprovalRequest(int orderId) {
+        this.orderId = orderId;
+    }
 
     ApproveOrderCommand toFunctionalCommand(OrderRepository orderRepository) {
-        return new ApproveOrderCommand(orderId, approved, orderRepository);
+        return new ApproveOrderCommand(orderId, orderRepository);
     }
 
     public static class ApproveOrderCommand {
         private final int orderId;
-        private final boolean approved;
         private final OrderRepository orderRepository;
 
-        ApproveOrderCommand(int orderId, boolean approved, OrderRepository orderRepository) {
+        ApproveOrderCommand(int orderId, OrderRepository orderRepository) {
             this.orderId = orderId;
-            this.approved = approved;
             this.orderRepository = orderRepository;
         }
 
         void run() {
             final Order order = orderRepository.getById(orderId);
-            approveOrReject(order);
+            order.approve();
             orderRepository.save(order);
         }
-
-        private void approveOrReject(Order order) {
-            if (approved) order.approve();
-            else order.reject();
-        }
-
     }
 }
