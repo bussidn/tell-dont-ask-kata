@@ -2,7 +2,7 @@ package it.gabrieletondi.telldontaskkata.domain.order;
 
 import it.gabrieletondi.telldontaskkata.domain.OrderItem;
 import it.gabrieletondi.telldontaskkata.domain.OrderStatus;
-import it.gabrieletondi.telldontaskkata.service.ShipmentService;
+import it.gabrieletondi.telldontaskkata.service.Shipping;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -29,8 +29,8 @@ public class Order {
         return status -> constructor.apply(id).apply(status).apply(currency).apply(items);
     }
 
-    public ToBeShippedOrder sentToShippingService() {
-        return new ToBeShippedOrder(id, SENT_TO_SHIPPING_SERVICE, currency, items);
+    public SentToShippingOrder sentToShippingService() {
+        return new SentToShippingOrder(id, SENT_TO_SHIPPING, currency, items);
     }
 
     public static Order.Builder createOrderWithId(int orderId) {
@@ -120,7 +120,7 @@ public class Order {
         return Objects.hash(id);
     }
 
-    public ShippedOrder shipWith(ShipmentService shipmentService) {
+    public ShippedOrder shipWith(Shipping shipping) {
         if (isCreated() || isRejected()) {
             throw new OrderCannotBeShippedException();
         }
@@ -129,7 +129,7 @@ public class Order {
             throw new OrderCannotBeShippedTwiceException();
         }
 
-        return shipmentService.ship(this.sentToShippingService());
+        return shipping.ship(this.sentToShippingService());
     }
 
     private boolean isCreated() {

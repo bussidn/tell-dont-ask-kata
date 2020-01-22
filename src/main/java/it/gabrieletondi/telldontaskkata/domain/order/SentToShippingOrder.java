@@ -7,8 +7,8 @@ import java.util.List;
 
 import static it.gabrieletondi.telldontaskkata.domain.OrderStatus.SHIPPED;
 
-public class ToBeShippedOrder extends Order {
-    ToBeShippedOrder(int id, OrderStatus status, String currency, List<OrderItem> items) {
+public class SentToShippingOrder extends Order {
+    SentToShippingOrder(int id, OrderStatus status, String currency, List<OrderItem> items) {
         super(id, status, currency, items);
     }
 

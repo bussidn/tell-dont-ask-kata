@@ -2,10 +2,10 @@ package it.gabrieletondi.telldontaskkata.doubles;
 
 import it.gabrieletondi.telldontaskkata.domain.order.Order;
 import it.gabrieletondi.telldontaskkata.domain.order.ShippedOrder;
-import it.gabrieletondi.telldontaskkata.domain.order.ToBeShippedOrder;
-import it.gabrieletondi.telldontaskkata.service.ShipmentService;
+import it.gabrieletondi.telldontaskkata.domain.order.SentToShippingOrder;
+import it.gabrieletondi.telldontaskkata.service.Shipping;
 
-public class TestShipmentService implements ShipmentService {
+public class TestShipping implements Shipping {
     private Order shippedOrder = null;
 
     public Order getShippedOrder() {
@@ -13,7 +13,7 @@ public class TestShipmentService implements ShipmentService {
     }
 
     @Override
-    public ShippedOrder ship(ToBeShippedOrder order) {
+    public ShippedOrder ship(SentToShippingOrder order) {
         this.shippedOrder = order;
         return order.asShippedOrder();
     }

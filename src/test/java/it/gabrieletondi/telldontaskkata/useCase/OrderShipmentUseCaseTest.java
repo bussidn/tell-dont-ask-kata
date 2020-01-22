@@ -5,7 +5,7 @@ import it.gabrieletondi.telldontaskkata.domain.OrderStatus;
 import it.gabrieletondi.telldontaskkata.domain.order.OrderCannotBeShippedException;
 import it.gabrieletondi.telldontaskkata.domain.order.OrderCannotBeShippedTwiceException;
 import it.gabrieletondi.telldontaskkata.doubles.TestOrderRepository;
-import it.gabrieletondi.telldontaskkata.doubles.TestShipmentService;
+import it.gabrieletondi.telldontaskkata.doubles.TestShipping;
 import it.gabrieletondi.telldontaskkata.useCase.shipment.OrderShipmentRequest;
 import it.gabrieletondi.telldontaskkata.useCase.shipment.OrderShipmentUseCase;
 import org.junit.Test;
@@ -17,7 +17,7 @@ import static org.junit.Assert.assertThat;
 
 public class OrderShipmentUseCaseTest {
     private final TestOrderRepository orderRepository = new TestOrderRepository();
-    private final TestShipmentService shipmentService = new TestShipmentService();
+    private final TestShipping shipmentService = new TestShipping();
     private final OrderShipmentUseCase useCase = new OrderShipmentUseCase(orderRepository, shipmentService);
 
     @Test
