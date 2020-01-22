@@ -25,12 +25,12 @@ public class Order {
         this.items = items;
     }
 
-    <T extends Order> Function<OrderStatus, T> statusFactory(Function<Integer, Function<OrderStatus, Function<String, Function<List<OrderItem>, T>>>> constructor) {
-        return status -> constructor.apply(id).apply(status).apply(currency).apply(items);
+    <T extends Order> T statusFactory(Function<Integer, Function<String, Function<List<OrderItem>, T>>> constructor) {
+        return constructor.apply(id).apply(currency).apply(items);
     }
 
     public SentToShippingOrder sentToShippingService() {
-        return new SentToShippingOrder(id, SENT_TO_SHIPPING, currency, items);
+        return new SentToShippingOrder(id, currency, items);
     }
 
     public static Order.Builder createOrderWithId(int orderId) {
