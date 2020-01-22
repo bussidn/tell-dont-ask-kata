@@ -1,6 +1,6 @@
 package it.gabrieletondi.telldontaskkata.useCase.rejection;
 
-import it.gabrieletondi.telldontaskkata.domain.order.Order;
+import it.gabrieletondi.telldontaskkata.domain.order.CreatedOrder;
 import it.gabrieletondi.telldontaskkata.repository.OrderRepository;
 
 public class OrderRejectionRequest {
@@ -24,8 +24,9 @@ public class OrderRejectionRequest {
         }
 
         void run() {
-            final Order order = orderRepository.getById(orderId);
-            orderRepository.save(order.reject());
+            orderRepository.findCreatedOrderById(orderId)
+                    .map(CreatedOrder::reject)
+                    .ifPresent(orderRepository::save);
         }
 
     }

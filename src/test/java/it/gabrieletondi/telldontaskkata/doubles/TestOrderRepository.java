@@ -41,10 +41,6 @@ public class TestOrderRepository implements OrderRepository {
         return createdOrders.stream().filter(o -> o.getId() == orderId).findFirst();
     }
 
-    public void addOrder(Order order) {
-        this.orders.add(order);
-    }
-
     public void addOrder(ApprovedOrder order) {
         this.approvedOrders.add(order);
     }
