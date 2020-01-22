@@ -7,7 +7,7 @@ import java.util.List;
 import static it.gabrieletondi.telldontaskkata.domain.OrderStatus.SENT_TO_SHIPPING;
 
 public class SentToShippingOrder extends Order {
-    SentToShippingOrder(int id, String currency, List<OrderItem> items) {
+    public SentToShippingOrder(int id, String currency, List<OrderItem> items) {
         super(id, SENT_TO_SHIPPING, currency, items);
     }
 

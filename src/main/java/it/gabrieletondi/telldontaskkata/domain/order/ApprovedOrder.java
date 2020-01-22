@@ -6,9 +6,11 @@ import it.gabrieletondi.telldontaskkata.service.Shipping;
 
 import java.util.List;
 
+import static it.gabrieletondi.telldontaskkata.domain.OrderStatus.APPROVED;
+
 public class ApprovedOrder extends Order {
-    ApprovedOrder(int id, OrderStatus status, String currency, List<OrderItem> items) {
-        super(id, status, currency, items);
+    public ApprovedOrder(int id, String currency, List<OrderItem> items) {
+        super(id, APPROVED, currency, items);
     }
 
     public ShippedOrder shipWith(Shipping shipping) {
