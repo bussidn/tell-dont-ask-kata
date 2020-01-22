@@ -1,6 +1,5 @@
 package it.gabrieletondi.telldontaskkata.useCase.shipment;
 
-import it.gabrieletondi.telldontaskkata.domain.order.Order;
 import it.gabrieletondi.telldontaskkata.repository.OrderRepository;
 import it.gabrieletondi.telldontaskkata.service.Shipping;
 
@@ -28,8 +27,9 @@ public class OrderShipmentRequest {
         }
 
         void run() {
-            final Order order = orderRepository.getById(orderId);
-            orderRepository.save(order.shipWith(shipping));
+            orderRepository.findApprovedOrderById(orderId)
+                    .map(order -> order.shipWith(shipping))
+                    .ifPresent(orderRepository::save);
         }
     }
 }
