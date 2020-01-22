@@ -1,5 +1,5 @@
 package it.gabrieletondi.telldontaskkata.domain;
 
 public enum OrderStatus {
-    APPROVED, REJECTED, SHIPPED, CREATED
+    APPROVED, REJECTED, TO_BE_SHIPPED, SHIPPED, CREATED
 }

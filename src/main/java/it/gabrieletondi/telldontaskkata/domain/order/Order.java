@@ -9,8 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-import static it.gabrieletondi.telldontaskkata.domain.OrderStatus.CREATED;
-import static it.gabrieletondi.telldontaskkata.domain.OrderStatus.SHIPPED;
+import static it.gabrieletondi.telldontaskkata.domain.OrderStatus.*;
 
 public class Order {
     private final int id;
@@ -27,6 +26,10 @@ public class Order {
 
     public ShippedOrder asShippedOrder() {
         return new ShippedOrder(id, SHIPPED, currency, items);
+    }
+
+    public ToBeShippedOrder toBeShipped() {
+        return new ToBeShippedOrder(id, TO_BE_SHIPPED, currency, items);
     }
 
     public static Order.Builder createOrderWithId(int orderId) {
@@ -125,7 +128,7 @@ public class Order {
             throw new OrderCannotBeShippedTwiceException();
         }
 
-        shipmentService.ship(this);
+        shipmentService.ship(this.toBeShipped());
 
         this.status = OrderStatus.SHIPPED;
         return this;
