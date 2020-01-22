@@ -9,12 +9,10 @@ import java.util.List;
 import java.util.Objects;
 import java.util.function.Function;
 
-import static it.gabrieletondi.telldontaskkata.domain.OrderStatus.CREATED;
-
-public class Order {
+public abstract class Order {
     private final int id;
     private final String currency;
-    private OrderStatus status;
+    private final OrderStatus status;
     private final List<OrderItem> items;
 
     Order(int id, OrderStatus status, String currency, List<OrderItem> items) {
@@ -24,7 +22,7 @@ public class Order {
         this.items = items;
     }
 
-    <T extends Order> T statusFactory(Function<Integer, Function<String, Function<List<OrderItem>, T>>> constructor) {
+    <T extends Order> T orderFactory(Function<Integer, Function<String, Function<List<OrderItem>, T>>> constructor) {
         return constructor.apply(id).apply(currency).apply(items);
     }
 
@@ -32,12 +30,8 @@ public class Order {
         return new SentToShippingOrder(id, currency, items);
     }
 
-    public static Order.Builder createOrderWithId(int orderId) {
-        return new Order.Builder(orderId);
-    }
-
-    public static Order initializeOrderWith(String currency, int orderId) {
-        return createOrderWithId(orderId)
+    public static CreatedOrder createOrderWith(String currency, int orderId) {
+        return new Builder(orderId)
                 .currency(currency)
                 .build();
     }
@@ -70,29 +64,6 @@ public class Order {
         return id;
     }
 
-    private boolean isShipped() {
-        return status.equals(OrderStatus.SHIPPED);
-    }
-
-    private void throwIfShipped() {
-        if (isShipped()) {
-            throw new ShippedOrdersCannotBeChangedException();
-        }
-    }
-
-    private boolean isApproved() {
-        return status.equals(OrderStatus.APPROVED);
-    }
-
-    public Order reject() {
-        throwIfShipped();
-        if (isApproved()) {
-            throw new ApprovedOrderCannotBeRejectedException();
-        }
-        this.status = OrderStatus.REJECTED;
-        return this;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -113,7 +84,6 @@ public class Order {
 
     public static class Builder {
         private final int id;
-        private OrderStatus status = CREATED;
         private String currency;
         private final List<OrderItem> items = new ArrayList<>();
 
@@ -121,18 +91,13 @@ public class Order {
             this.id = id;
         }
 
-        public Builder status(OrderStatus status) {
-            this.status = status;
-            return this;
-        }
-
         Builder currency(String currency) {
             this.currency = currency;
             return this;
         }
 
-        public Order build() {
-            return new Order(id, status, currency, items);
+        public CreatedOrder build() {
+            return new CreatedOrder(id, currency, items);
         }
     }
 }

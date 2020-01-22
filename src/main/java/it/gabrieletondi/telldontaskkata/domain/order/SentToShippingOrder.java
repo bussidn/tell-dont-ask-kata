@@ -12,6 +12,6 @@ public class SentToShippingOrder extends Order {
     }
 
     public ShippedOrder asShippedOrder() {
-        return statusFactory(ShippedOrder.constructorAsFunction());
+        return orderFactory(ShippedOrder.constructorAsFunction());
     }
 }

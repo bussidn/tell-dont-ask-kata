@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Function;
 
-import static it.gabrieletondi.telldontaskkata.domain.order.Order.initializeOrderWith;
+import static it.gabrieletondi.telldontaskkata.domain.order.Order.createOrderWith;
 
 public class SellItemsRequest {
 
@@ -52,7 +52,7 @@ public class SellItemsRequest {
             return requests.stream()
                             .map(toCommand())
                             .map(toOrderItem())
-                            .reduce(initializeOrderWith(EURO, id), Order::add, (o1, o2) -> null);
+                            .reduce(createOrderWith(EURO, id), Order::add, (o1, o2) -> null);
         }
 
         private Function<SellItemRequest.SellItemCommand, OrderItem> toOrderItem() {

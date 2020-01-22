@@ -12,6 +12,10 @@ public class CreatedOrder extends Order {
     }
 
     public ApprovedOrder approve() {
-        return statusFactory(ApprovedOrder.constructorAsFunction());
+        return orderFactory(ApprovedOrder.constructorAsFunction());
+    }
+
+    public RejectedOrder reject() {
+        return orderFactory(RejectedOrder.constructorAsFunction());
     }
 }

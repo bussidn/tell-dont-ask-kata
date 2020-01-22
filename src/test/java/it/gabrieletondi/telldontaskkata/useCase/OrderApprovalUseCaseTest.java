@@ -1,6 +1,5 @@
 package it.gabrieletondi.telldontaskkata.useCase;
 
-import it.gabrieletondi.telldontaskkata.domain.OrderItem;
 import it.gabrieletondi.telldontaskkata.domain.OrderStatus;
 import it.gabrieletondi.telldontaskkata.domain.order.CreatedOrder;
 import it.gabrieletondi.telldontaskkata.domain.order.Order;
@@ -12,9 +11,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import static it.gabrieletondi.telldontaskkata.domain.order.Order.createOrderWithId;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;

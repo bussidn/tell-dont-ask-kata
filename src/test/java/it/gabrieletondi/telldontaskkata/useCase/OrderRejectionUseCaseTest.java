@@ -11,7 +11,6 @@ import org.junit.rules.ExpectedException;
 
 import java.util.ArrayList;
 
-import static it.gabrieletondi.telldontaskkata.domain.order.Order.createOrderWithId;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.assertThat;
