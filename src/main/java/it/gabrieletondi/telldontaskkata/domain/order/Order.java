@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Objects;
 
 import static it.gabrieletondi.telldontaskkata.domain.OrderStatus.CREATED;
+import static it.gabrieletondi.telldontaskkata.domain.OrderStatus.SHIPPED;
 
 public class Order {
     private final int id;
@@ -17,11 +18,15 @@ public class Order {
     private OrderStatus status;
     private final List<OrderItem> items;
 
-    private Order(int id, OrderStatus status, String currency, List<OrderItem> items) {
+    Order(int id, OrderStatus status, String currency, List<OrderItem> items) {
         this.id = id;
         this.status = status;
         this.currency = currency;
         this.items = items;
+    }
+
+    public ShippedOrder asShippedOrder() {
+        return new ShippedOrder(id, SHIPPED, currency, items);
     }
 
     public static Order.Builder createOrderWithId(int orderId) {

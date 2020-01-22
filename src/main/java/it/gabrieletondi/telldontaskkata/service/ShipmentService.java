@@ -1,7 +1,8 @@
 package it.gabrieletondi.telldontaskkata.service;
 
 import it.gabrieletondi.telldontaskkata.domain.order.Order;
+import it.gabrieletondi.telldontaskkata.domain.order.ShippedOrder;
 
 public interface ShipmentService {
-    void ship(Order order);
+    ShippedOrder ship(Order order);
 }
