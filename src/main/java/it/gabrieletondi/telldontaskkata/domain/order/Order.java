@@ -28,9 +28,9 @@ public class Order {
         return new Order.Builder(orderId);
     }
 
-    public static Order initializeOrderWith(String euro, int orderId) {
+    public static Order initializeOrderWith(String currency, int orderId) {
         return createOrderWithId(orderId)
-                .currency(euro)
+                .currency(currency)
                 .build();
     }
 
