@@ -29,8 +29,8 @@ public class Order {
         return status -> constructor.apply(id).apply(status).apply(currency).apply(items);
     }
 
-    public ToBeShippedOrder toBeShipped() {
-        return new ToBeShippedOrder(id, TO_BE_SHIPPED, currency, items);
+    public ToBeShippedOrder sentToShippingService() {
+        return new ToBeShippedOrder(id, SENT_TO_SHIPPING_SERVICE, currency, items);
     }
 
     public static Order.Builder createOrderWithId(int orderId) {
@@ -120,7 +120,7 @@ public class Order {
         return Objects.hash(id);
     }
 
-    public Order shipWith(ShipmentService shipmentService) {
+    public ShippedOrder shipWith(ShipmentService shipmentService) {
         if (isCreated() || isRejected()) {
             throw new OrderCannotBeShippedException();
         }
@@ -129,10 +129,7 @@ public class Order {
             throw new OrderCannotBeShippedTwiceException();
         }
 
-        shipmentService.ship(this.toBeShipped());
-
-        this.status = OrderStatus.SHIPPED;
-        return this;
+        return shipmentService.ship(this.sentToShippingService());
     }
 
     private boolean isCreated() {
