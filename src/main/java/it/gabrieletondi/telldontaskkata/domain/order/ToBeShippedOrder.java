@@ -5,8 +5,14 @@ import it.gabrieletondi.telldontaskkata.domain.OrderStatus;
 
 import java.util.List;
 
+import static it.gabrieletondi.telldontaskkata.domain.OrderStatus.SHIPPED;
+
 public class ToBeShippedOrder extends Order {
     ToBeShippedOrder(int id, OrderStatus status, String currency, List<OrderItem> items) {
         super(id, status, currency, items);
+    }
+
+    public ShippedOrder asShippedOrder() {
+        return new ShippedOrder(getId(), SHIPPED, getCurrency(), getItems());
     }
 }

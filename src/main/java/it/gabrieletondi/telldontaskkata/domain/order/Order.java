@@ -24,10 +24,6 @@ public class Order {
         this.items = items;
     }
 
-    public ShippedOrder asShippedOrder() {
-        return new ShippedOrder(id, SHIPPED, currency, items);
-    }
-
     public ToBeShippedOrder toBeShipped() {
         return new ToBeShippedOrder(id, TO_BE_SHIPPED, currency, items);
     }
