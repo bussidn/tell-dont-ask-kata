@@ -1,6 +1,7 @@
 package it.gabrieletondi.telldontaskkata.repository;
 
 import it.gabrieletondi.telldontaskkata.domain.order.ApprovedOrder;
+import it.gabrieletondi.telldontaskkata.domain.order.CreatedOrder;
 import it.gabrieletondi.telldontaskkata.domain.order.Order;
 
 import java.util.Optional;
@@ -11,4 +12,6 @@ public interface OrderRepository {
     Order getById(int orderId);
 
     Optional<ApprovedOrder> findApprovedOrderById(int orderId);
+
+    Optional<CreatedOrder> findCreatedOrderById(int orderId);
 }

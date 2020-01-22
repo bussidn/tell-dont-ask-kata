@@ -80,21 +80,8 @@ public class Order {
         }
     }
 
-    private boolean isRejected() {
-        return status.equals(OrderStatus.REJECTED);
-    }
-
     private boolean isApproved() {
         return status.equals(OrderStatus.APPROVED);
-    }
-
-    public Order approve() {
-        throwIfShipped();
-        if (isRejected()) {
-            throw new RejectedOrderCannotBeApprovedException();
-        }
-        this.status = OrderStatus.APPROVED;
-        return this;
     }
 
     public Order reject() {

@@ -1,7 +1,11 @@
 package it.gabrieletondi.telldontaskkata.useCase.approval;
 
+import it.gabrieletondi.telldontaskkata.domain.order.ApprovedOrder;
+import it.gabrieletondi.telldontaskkata.domain.order.CreatedOrder;
 import it.gabrieletondi.telldontaskkata.domain.order.Order;
 import it.gabrieletondi.telldontaskkata.repository.OrderRepository;
+
+import java.util.Optional;
 
 public class OrderApprovalRequest {
     public int orderId;
@@ -24,8 +28,9 @@ public class OrderApprovalRequest {
         }
 
         void run() {
-            final Order order = orderRepository.getById(orderId);
-            orderRepository.save(order.approve());
+            orderRepository.findCreatedOrderById(orderId)
+                    .map(CreatedOrder::approve)
+                    .ifPresent(orderRepository::save);
         }
     }
 }

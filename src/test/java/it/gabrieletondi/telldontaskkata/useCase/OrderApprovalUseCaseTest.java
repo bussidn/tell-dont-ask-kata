@@ -31,7 +31,7 @@ public class OrderApprovalUseCaseTest {
     public void approvedExistingOrder() {
         int orderId = 1;
         CreatedOrder initialOrder = new CreatedOrder(orderId, "EUR", new ArrayList<>());
-        orderRepository.save(initialOrder);
+        orderRepository.addOrder(initialOrder);
 
         OrderApprovalRequest request = approvalRequest(orderId);
 

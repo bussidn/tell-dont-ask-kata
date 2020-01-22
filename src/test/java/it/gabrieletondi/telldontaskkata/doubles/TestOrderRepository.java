@@ -1,6 +1,7 @@
 package it.gabrieletondi.telldontaskkata.doubles;
 
 import it.gabrieletondi.telldontaskkata.domain.order.ApprovedOrder;
+import it.gabrieletondi.telldontaskkata.domain.order.CreatedOrder;
 import it.gabrieletondi.telldontaskkata.domain.order.Order;
 import it.gabrieletondi.telldontaskkata.repository.OrderRepository;
 
@@ -12,6 +13,7 @@ public class TestOrderRepository implements OrderRepository {
     private Order insertedOrder;
     private final Set<Order> orders = new HashSet<>();
     private final Set<ApprovedOrder> approvedOrders = new HashSet<>();
+    private final Set<CreatedOrder> createdOrders = new HashSet<>();
 
     public Order getSavedOrder() {
         return insertedOrder;
@@ -34,12 +36,20 @@ public class TestOrderRepository implements OrderRepository {
         return approvedOrders.stream().filter(o -> o.getId() == orderId).findFirst();
     }
 
+    @Override
+    public Optional<CreatedOrder> findCreatedOrderById(int orderId) {
+        return createdOrders.stream().filter(o -> o.getId() == orderId).findFirst();
+    }
+
     public void addOrder(Order order) {
         this.orders.add(order);
     }
 
     public void addOrder(ApprovedOrder order) {
-        this.orders.add(order);
         this.approvedOrders.add(order);
+    }
+
+    public void addOrder(CreatedOrder order) {
+        this.createdOrders.add(order);
     }
 }
